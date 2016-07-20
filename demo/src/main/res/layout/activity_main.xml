@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="top.wefor.circularanimdemo.MainActivity"
+    >
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="64dp"/>
+
+    <Button
+        android:id="@+id/activity_image_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@color/colorPrimary"
+        android:padding="16dp"
+        android:text="Start Activity 图片"
+        android:textColor="@android:color/white"/>
+
+
+    <Button
+        android:id="@+id/activity_color_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@color/colorPrimary"
+        android:padding="16dp"
+        android:text="Start Activity 颜色"
+        android:textColor="@android:color/white"/>
+
+    <FrameLayout
+        android:layout_margin="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/change_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:text="变变变－进度条"
+            android:textColor="@android:color/white"/>
+    </FrameLayout>
+
+</LinearLayout>
+
