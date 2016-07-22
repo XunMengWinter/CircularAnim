@@ -5,11 +5,11 @@
 
 效果图是是Dribbble上看到的，[原作品在此。](https://dribbble.com/shots/1945593-Login-Home-Screen)
 
-我所实现的效果如下([视频在此](http://v.youku.com/v_show/id_XMTY1MjMxMTk3Ng==.html?x&sharefrom=android))：
-
+我所实现的效果如下：
+[在优酷观看](http://v.youku.com/v_show/id_XMTY1MjMxMTk3Ng==.html?x&sharefrom=android)
+[Watch on YouTube](https://youtu.be/3u0xFX62mgU)
 ![CircularAnim.png](http://upload-images.jianshu.io/upload_images/2066824-05a997acd73a17f1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/360/h640)
 
-视频传到优酷了，2M左右，[点这里观看。](http://v.youku.com/v_show/id_XMTY1MjMxMTk3Ng==.html?x&sharefrom=android)
 
 ### 使用方法
 为了使用起来简单，我将动画封装成CircularAnimUtil.
