@@ -1,22 +1,25 @@
 apply plugin: 'com.android.library'
+//apply from: 'https://raw.githubusercontent.com/XunMengWinter/JCenter/master/installv1.gradle'
+//apply from: 'https://raw.githubusercontent.com/XunMengWinter/JCenter/master/bintrayv1.gradle'
 
 ext {
     bintrayRepo = 'maven'
-    bintrayName = 'circularanim'
+    bintrayName = 'CircularAnimUtil'
 
     publishedGroupId = 'top.wefor.circularanim'
-    libraryName = 'CircularAnim'
-    artifact = 'circular-anim'
+    libraryName = 'circularanim'
+    artifact = 'circularanim'
 
     libraryDescription = '快速创建圆形动画，对 ViewAnimationUtils.createCircularReveal() 方法的封装.'
 
-    siteUrl = 'https://github.com/XunMengWinter/CircularAnim'
-    gitUrl = 'https://github.com/XunMengWinter/CircularAnim.git'
+    siteUrl = 'https://github.com/XunMengWinter/CircularAnimUtil'
+    gitUrl = 'https://github.com/XunMengWinter/CircularAnimUtil.git'
 
+    libraryName = 'CircularAnimUtil'       //项目名字
     libraryVersion = '0.1.0'
 
     developerId = 'xunmengwinter'
-    developerName = 'DreamWinter'
+    developerName = 'xunmengwinter'
     developerEmail = 'xunmengwinter@gmail.com'
 
     licenseName = 'The Apache Software License, Version 2.0'
@@ -47,6 +50,3 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.0.0'
 }
-
-//apply from: 'https://raw.githubusercontent.com/XunMengWinter/JCenter/master/installv1.gradle'
-//apply from: 'https://raw.githubusercontent.com/XunMengWinter/JCenter/master/bintrayv1.gradle'

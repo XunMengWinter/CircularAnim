@@ -3,8 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CircularAnim.iml" filepath="$PROJECT_DIR$/CircularAnim.iml" />
-      <module fileurl="file://$PROJECT_DIR$/circularanim/circularanimlib.iml" filepath="$PROJECT_DIR$/circularanim/circularanimlib.iml" />
       <module fileurl="file://$PROJECT_DIR$/demo/app.iml" filepath="$PROJECT_DIR$/demo/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/circularanim/circularanim.iml" filepath="$PROJECT_DIR$/circularanim/circularanim.iml" />
+      <module fileurl="file://$PROJECT_DIR$/circularanim/circularanimlib.iml" filepath="$PROJECT_DIR$/circularanim/circularanimlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo/demo.iml" filepath="$PROJECT_DIR$/demo/demo.iml" />
     </modules>
   </component>
 </project>

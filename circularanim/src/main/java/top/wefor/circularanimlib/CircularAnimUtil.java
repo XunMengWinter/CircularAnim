@@ -6,7 +6,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
@@ -20,7 +19,7 @@ import android.widget.ImageView;
  *
  * @author ice
  */
-public class CircularAnim {
+public class CircularAnimUtil {
 
     public static final long PERFECT_MILLS = 618;
     public static final int MINI_RADIUS = 0;
@@ -29,7 +28,7 @@ public class CircularAnim {
      * 向四周伸张，直到完成显示。
      */
     @SuppressLint("NewApi")
-    public static void showAsCircular(View myView, float startRadius, long durationMills) {
+    public static void show(View myView, float startRadius, long durationMills) {
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
             myView.setVisibility(View.VISIBLE);
             return;
@@ -55,7 +54,7 @@ public class CircularAnim {
      * 由满向中间收缩，直到隐藏。
      */
     @SuppressLint("NewApi")
-    public static void hideAsCircular(final View myView, float endRadius, long durationMills) {
+    public static void hide(final View myView, float endRadius, long durationMills) {
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
             myView.setVisibility(View.INVISIBLE);
             return;
@@ -88,8 +87,8 @@ public class CircularAnim {
      * 返回至 @thisActivity 后显示收缩动画。
      */
     @SuppressLint("NewApi")
-    public static void startActivityForResultAsCircular(
-            final Activity thisActivity, final Intent intent, final Integer requestCode, @Nullable final Bundle bundle,
+    public static void startActivityForResult(
+            final Activity thisActivity, final Intent intent, final Integer requestCode, final Bundle bundle,
             final View triggerView, int colorOrImageRes, final long durationMills) {
 
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
@@ -158,31 +157,31 @@ public class CircularAnim {
     /*下面的方法全是重载，用简化上面方法的构建*/
 
 
-    public static void startActivityForResultAsCircular(
+    public static void startActivityForResult(
             Activity thisActivity, Intent intent, Integer requestCode, View triggerView, int colorOrImageRes) {
-        startActivityForResultAsCircular(thisActivity, intent, requestCode, null, triggerView, colorOrImageRes, PERFECT_MILLS);
+        startActivityForResult(thisActivity, intent, requestCode, null, triggerView, colorOrImageRes, PERFECT_MILLS);
     }
 
-    public static void startActivityAsCircular(
+    public static void startActivity(
             Activity thisActivity, Intent intent, View triggerView, int colorOrImageRes, long durationMills) {
-        startActivityForResultAsCircular(thisActivity, intent, null, null, triggerView, colorOrImageRes, durationMills);
+        startActivityForResult(thisActivity, intent, null, null, triggerView, colorOrImageRes, durationMills);
     }
 
-    public static void startActivityAsCircular(
+    public static void startActivity(
             Activity thisActivity, Intent intent, View triggerView, int colorOrImageRes) {
-        startActivityAsCircular(thisActivity, intent, triggerView, colorOrImageRes, PERFECT_MILLS);
+        startActivity(thisActivity, intent, triggerView, colorOrImageRes, PERFECT_MILLS);
     }
 
-    public static void startActivityAsCircular(Activity thisActivity, Class<?> targetClass, View triggerView, int colorOrImageRes) {
-        startActivityAsCircular(thisActivity, new Intent(thisActivity, targetClass), triggerView, colorOrImageRes, PERFECT_MILLS);
+    public static void startActivity(Activity thisActivity, Class<?> targetClass, View triggerView, int colorOrImageRes) {
+        startActivity(thisActivity, new Intent(thisActivity, targetClass), triggerView, colorOrImageRes, PERFECT_MILLS);
     }
 
-    public static void showAsCircular(View myView) {
-        showAsCircular(myView, MINI_RADIUS, PERFECT_MILLS);
+    public static void show(View myView) {
+        show(myView, MINI_RADIUS, PERFECT_MILLS);
     }
 
-    public static void hideAsCircular(View myView) {
-        hideAsCircular(myView, MINI_RADIUS, PERFECT_MILLS);
+    public static void hide(View myView) {
+        hide(myView, MINI_RADIUS, PERFECT_MILLS);
     }
 
 }

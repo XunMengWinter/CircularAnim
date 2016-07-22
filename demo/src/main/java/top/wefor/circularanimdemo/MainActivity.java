@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
-import top.wefor.circularanimlib.CircularAnim;
+import top.wefor.circularanimlib.CircularAnimUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mProgressBar.setVisibility(View.VISIBLE);
                 // 收缩按钮
-                CircularAnim.hideAsCircular(mChangeBtn);
+                CircularAnimUtil.hide(mChangeBtn);
             }
         });
 
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mProgressBar.setVisibility(View.GONE);
                 // 伸展按钮
-                CircularAnim.showAsCircular(mChangeBtn);
+                CircularAnimUtil.show(mChangeBtn);
             }
         });
 
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 先将图片展出铺满，然后启动新的Activity
-                CircularAnim.startActivityAsCircular(MainActivity.this, EmptyActivity.class, view, R.mipmap.img_huoer_black);
+                CircularAnimUtil.startActivity(MainActivity.this, EmptyActivity.class, view, R.mipmap.img_huoer_black);
             }
         });
 
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 先将颜色展出铺满，然后启动新的Activity
-                CircularAnim.startActivityAsCircular(MainActivity.this, EmptyActivity.class, view, R.color.colorPrimary);
+                CircularAnimUtil.startActivity(MainActivity.this, EmptyActivity.class, view, R.color.colorPrimary);
             }
         });
     }
