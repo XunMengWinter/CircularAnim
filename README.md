@@ -6,11 +6,9 @@
 效果图是是Dribbble上看到的，[原作品在此。](https://dribbble.com/shots/1945593-Login-Home-Screen)
 
 我所实现的效果如下：
-[在优酷观看](http://v.youku.com/v_show/id_XMTY1MjMxMTk3Ng==.html?x&sharefrom=android)
-
 [Watch on YouTube](https://youtu.be/3u0xFX62mgU)
 
-![CircularAnim.png](http://upload-images.jianshu.io/upload_images/2066824-05a997acd73a17f1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/360/h640)
+![CircularAnim](https://raw.githubusercontent.com/XunMengWinter/source/master/gif/CircularAnimDemo.gif)
 
 
 ### 使用方法
@@ -260,4 +258,6 @@ public class CircularAnimUtil {
 需要注意的是，该帮助类适配了api 19以下的版本，因此你不需要判断版本号，但在这些低版本设备上是没有水波动画效果的，不过好的是并不会影响交互逻辑。
 
 另外，有木有手机版或者Mac版好用的Gif转换器推荐，表示好难找。
+(感谢[im_brucezz](http://www.jianshu.com/users/693105fbc9cb/timeline)、[AkiossDev](http://www.jianshu.com/users/aedb3232c9e0/timeline)推荐的GIF录制器：licecap，非常好用，上面的gif已经用这个录制了～)
+
 And有没有傻瓜式发布项目到JCenter的教程推荐？看过几篇都不管用。囧 ~ 
