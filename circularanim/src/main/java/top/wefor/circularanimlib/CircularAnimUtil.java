@@ -107,10 +107,23 @@ public class CircularAnimUtil {
         int w = decorView.getWidth();
         int h = decorView.getHeight();
         decorView.addView(view, w, h);
-        final int finalRadius = (int) Math.sqrt(w * w + h * h) + 1;
+
+        // 计算中心点至view边界的最大距离
+        int maxW = Math.max(cx, w - cx);
+        int maxH = Math.max(cy, h - cy);
+        final int finalRadius = (int) Math.sqrt(maxW * maxW + maxH * maxH) + 1;
         Animator
                 anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
-        anim.setDuration(durationMills);
+        int maxRadius = (int) Math.sqrt(w * w + h * h) + 1;
+        long finalDuration = durationMills;
+        // 若使用默认时长，则需要根据水波扩散的距离来计算实际时间
+        if (finalDuration == PERFECT_MILLS) {
+            // 算出实际边距与最大边距的比率
+            double rate = 1d * finalRadius / maxRadius;
+            // 水波扩散的距离与扩散时间成正比
+            finalDuration = (long) (PERFECT_MILLS * rate);
+        }
+        anim.setDuration(finalDuration);
         anim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
