@@ -1,4 +1,4 @@
-# CircularAnim
+## CircularAnim
 
 首先来看一个UI动效图。
 ![动效来自Dribbble](https://d13yacurqjgara.cloudfront.net/users/62319/screenshots/1945593/shot.gif)
@@ -11,27 +11,27 @@
 ### 使用方法
 为了使用起来简单，我将动画封装成CircularAnimUtil.
 
-现在，让按钮隐藏只需一行代码，如下：
-> CircularAnimUtil.hideAsCircular(mChangeBtn);
+现在，让按钮收缩只需一行代码，如下：
+> CircularAnimUtil.hide(mChangeBtn);
 
 同理，让按钮伸展开：
-> CircularAnimUtil.showAsCircular(mChangeBtn);
+> CircularAnimUtil.show(mChangeBtn);
 
 水波般铺满指定颜色并启动一个Activity:
-> CircularAnimUtil.startActivityAsCircular(MainActivity.this, EmptyActivity.class, view, R.color.colorPrimary);
+> CircularAnimUtil.startActivity(MainActivity.this, EmptyActivity.class, view, R.color.colorPrimary);
 
 这里，你还可以放图片：
-> CircularAnimUtil.startActivityAsCircular(MainActivity.this, EmptyActivity.class, view, R.mipmap.img_huoer_black);
+> CircularAnimUtil.startActivity(MainActivity.this, EmptyActivity.class, view, R.mipmap.img_huoer_black);
 
 也许在显示或隐藏视图时，你想要设置半径和时长，你可以调用这个方法：
-> 显示：showAsCircular(View myView, float startRadius, long durationMills)
-隐藏：hideAsCircular(final View myView, float endRadius, long durationMills) 
+> 显示：show(View myView, float startRadius, long durationMills)
+隐藏：hide(final View myView, float endRadius, long durationMills) 
 
 以及，你可以在startActivity时带上Intent:
-startActivityAsCircular(Activity thisActivity, Intent intent, View triggerView, int colorOrImageRes)
+> startActivity(Activity thisActivity, Intent intent, View triggerView, int colorOrImageRes)
 
 还可以startActivityForResult:
-> startActivityForResultAsCircular(Activity thisActivity, Intent intent, Integer requestCode, View triggerView, int colorOrImageRes)
+> startActivityForResult(Activity thisActivity, Intent intent, Integer requestCode, View triggerView, int colorOrImageRes)
 
 同理，startActivity同样可以设置时长。
 
@@ -69,7 +69,7 @@ import android.view.View;
       * 向四周伸张，直到完成显示。
       */
      @SuppressLint("NewApi")
-     public static void showAsCircular(View myView, float startRadius, long durationMills) {
+     public static void show(View myView, float startRadius, long durationMills) {
          if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
              myView.setVisibility(View.VISIBLE); 
             return;
@@ -91,7 +91,7 @@ import android.view.View;
       * 由满向中间收缩，直到隐藏。
       */ 
     @SuppressLint("NewApi") 
-    public static void hideAsCircular(final View myView, float endRadius, long durationMills) { 
+    public static void hide(final View myView, float endRadius, long durationMills) { 
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) { 
             myView.setVisibility(View.INVISIBLE); 
             return;
@@ -120,7 +120,7 @@ import android.view.View;
      * 返回至 @thisActivity 后显示收缩动画。
       */
      @SuppressLint("NewApi") 
-    public static void startActivityForResultAsCircular( 
+    public static void startActivityForResult( 
             final Activity thisActivity, final Intent intent, final Integer requestCode, final Bundle bundle, 
             final View triggerView, int colorOrImageRes, final long durationMills) {  
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) { 
@@ -188,36 +188,38 @@ import android.view.View;
     /*下面的方法全是重载，用简化上面方法的构建*/
 
 
-       public static void startActivityForResultAsCircular( 
+       public static void startActivityForResult( 
             Activity thisActivity, Intent intent, Integer requestCode, View triggerView, int colorOrImageRes) { 
-        startActivityForResultAsCircular(thisActivity, intent, requestCode, null, triggerView, colorOrImageRes, PERFECT_MILLS);
+        startActivityForResult(thisActivity, intent, requestCode, null, triggerView, colorOrImageRes, PERFECT_MILLS);
      }
 
-      public static void startActivityAsCircular( 
+      public static void startActivity( 
             Activity thisActivity, Intent intent, View triggerView, int colorOrImageRes, long durationMills) {
-         startActivityForResultAsCircular(thisActivity, intent, null, null, triggerView, colorOrImageRes, durationMills);
+         startActivityForResult(thisActivity, intent, null, null, triggerView, colorOrImageRes, durationMills);
      }  
 
-    public static void startActivityAsCircular(
+    public static void startActivity(
              Activity thisActivity, Intent intent, View triggerView, int colorOrImageRes) { 
-        startActivityAsCircular(thisActivity, intent, triggerView, colorOrImageRes, PERFECT_MILLS);
+        startActivity(thisActivity, intent, triggerView, colorOrImageRes, PERFECT_MILLS);
      }  
 
-    public static void startActivityAsCircular(Activity thisActivity, Class<?> targetClass, View triggerView, int colorOrImageRes) { 
-        startActivityAsCircular(thisActivity, new Intent(thisActivity, targetClass), triggerView, colorOrImageRes, PERFECT_MILLS);
+    public static void startActivity(Activity thisActivity, Class<?> targetClass, View triggerView, int colorOrImageRes) { 
+        startActivity(thisActivity, new Intent(thisActivity, targetClass), triggerView, colorOrImageRes, PERFECT_MILLS);
      }  
 
-    public static void showAsCircular(View myView) { 
-        showAsCircular(myView, MINI_RADIUS, PERFECT_MILLS); 
+    public static void show(View myView) { 
+        show(myView, MINI_RADIUS, PERFECT_MILLS); 
     }  
 
-    public static void hideAsCircular(View myView) { 
-        hideAsCircular(myView, MINI_RADIUS, PERFECT_MILLS); 
+    public static void hide(View myView) { 
+        hide(myView, MINI_RADIUS, PERFECT_MILLS); 
     }
 
   }
 ```
 
 ### 后记
+需要注意的是，该帮助类适配了api 19以下的版本，因此你不需要判断版本号，但在这些低版本设备上是没有水波动画效果的，不过好的是并不会影响交互逻辑。
+
 另外，有木有手机版或者Mac版好用的Gif转换器推荐，表示好难找。
 And有没有傻瓜式发布项目到JCenter的教程推荐？看过几篇都不管用。囧 ~ 
