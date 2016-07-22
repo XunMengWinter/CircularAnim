@@ -17,11 +17,14 @@
 现在，让按钮收缩只需一行代码，如下：
 > CircularAnimUtil.hide(mChangeBtn);
 
+
 同理，让按钮伸展开：
 > CircularAnimUtil.show(mChangeBtn);
 
+
 水波般铺满指定颜色并启动一个Activity:
 > CircularAnimUtil.startActivity(MainActivity.this, EmptyActivity.class, view, R.color.colorPrimary);
+
 
 这里，你还可以放图片：
 > CircularAnimUtil.startActivity(MainActivity.this, EmptyActivity.class, view, R.mipmap.img_huoer_black);
@@ -30,11 +33,14 @@
 > 显示：show(View myView, float startRadius, long durationMills)
 隐藏：hide(final View myView, float endRadius, long durationMills) 
 
+
 以及，你可以在startActivity时带上Intent:
 > startActivity(Activity thisActivity, Intent intent, View triggerView, int colorOrImageRes)
 
+
 还可以startActivityForResult:
 > startActivityForResult(Activity thisActivity, Intent intent, Integer requestCode, View triggerView, int colorOrImageRes)
+
 
 同理，startActivity同样可以设置时长。
 
