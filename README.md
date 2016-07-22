@@ -31,6 +31,7 @@
 
 也许在显示或隐藏视图时，你想要设置半径和时长，你可以调用这个方法：
 > 显示：show(View myView, float startRadius, long durationMills)
+
 > 隐藏：hide(final View myView, float endRadius, long durationMills) 
 
 
