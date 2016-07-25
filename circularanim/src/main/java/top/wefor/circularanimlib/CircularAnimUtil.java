@@ -89,7 +89,7 @@ public class CircularAnimUtil {
     @SuppressLint("NewApi")
     public static void startActivityForResult(
             final Activity thisActivity, final Intent intent, final Integer requestCode, final Bundle bundle,
-            final View triggerView, int colorOrImageRes, final long durationMills) {
+            final View triggerView, int colorOrImageRes, long durationMills) {
 
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
             thisActivity.startActivity(intent);
@@ -115,14 +115,14 @@ public class CircularAnimUtil {
         Animator
                 anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
         int maxRadius = (int) Math.sqrt(w * w + h * h) + 1;
-        long finalDuration = durationMills;
         // 若使用默认时长，则需要根据水波扩散的距离来计算实际时间
-        if (finalDuration == PERFECT_MILLS) {
+        if (durationMills == PERFECT_MILLS) {
             // 算出实际边距与最大边距的比率
             double rate = 1d * finalRadius / maxRadius;
             // 水波扩散的距离与扩散时间成正比
-            finalDuration = (long) (PERFECT_MILLS * rate);
+            durationMills = (long) (PERFECT_MILLS * rate);
         }
+        final long finalDuration = durationMills;
         anim.setDuration(finalDuration);
         anim.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -145,7 +145,7 @@ public class CircularAnimUtil {
                     public void run() {
                         Animator anim =
                                 ViewAnimationUtils.createCircularReveal(view, cx, cy, finalRadius, 0);
-                        anim.setDuration(durationMills);
+                        anim.setDuration(finalDuration);
                         anim.addListener(new AnimatorListenerAdapter() {
                             @Override
                             public void onAnimationEnd(Animator animation) {

@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         mChangeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mChangeBtn.setEnabled(false);
                 mProgressBar.setVisibility(View.VISIBLE);
                 // 收缩按钮
                 CircularAnimUtil.hide(mChangeBtn);
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mProgressBar.setVisibility(View.GONE);
+                mChangeBtn.setEnabled(true);
                 // 伸展按钮
                 CircularAnimUtil.show(mChangeBtn);
             }
