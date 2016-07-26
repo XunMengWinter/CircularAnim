@@ -166,6 +166,66 @@ public class CircularAnimUtil {
         anim.start();
     }
 
+    /**
+     * 从指定View开始向四周伸张(伸张颜色或图片为colorOrImageRes), 然后启动@intent 并finish @thisActivity.
+     */
+    @SuppressLint("NewApi")
+    public static void startActivityThenFinish(
+            final Activity thisActivity, final Intent intent, final boolean isFinishAffinity, final View triggerView,
+            int colorOrImageRes, long durationMills) {
+
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
+            thisActivity.startActivity(intent);
+            return;
+        }
+
+        int[] location = new int[2];
+        triggerView.getLocationInWindow(location);
+        final int cx = location[0] + triggerView.getWidth() / 2;
+        final int cy = location[1] + triggerView.getHeight() / 2;
+        final ImageView view = new ImageView(thisActivity);
+        view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        view.setImageResource(colorOrImageRes);
+        final ViewGroup decorView = (ViewGroup) thisActivity.getWindow().getDecorView();
+        int w = decorView.getWidth();
+        int h = decorView.getHeight();
+        decorView.addView(view, w, h);
+
+        // 计算中心点至view边界的最大距离
+        int maxW = Math.max(cx, w - cx);
+        int maxH = Math.max(cy, h - cy);
+        final int finalRadius = (int) Math.sqrt(maxW * maxW + maxH * maxH) + 1;
+        Animator
+                anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
+        int maxRadius = (int) Math.sqrt(w * w + h * h) + 1;
+        // 若使用默认时长，则需要根据水波扩散的距离来计算实际时间
+        if (durationMills == PERFECT_MILLS) {
+            // 算出实际边距与最大边距的比率
+            double rate = 1d * finalRadius / maxRadius;
+            // 水波扩散的距离与扩散时间成正比
+            durationMills = (long) (PERFECT_MILLS * rate);
+        }
+        final long finalDuration = durationMills;
+        anim.setDuration(finalDuration);
+        anim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+
+                thisActivity.startActivity(intent);
+
+                // 默认渐隐过渡动画.
+                thisActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+                if (isFinishAffinity)
+                    thisActivity.finishAffinity(); // finish目标activity外的所有activity
+                else
+                    thisActivity.finish(); // finish当前activity
+            }
+        });
+        anim.start();
+    }
+
 
     /*下面的方法全是重载，用简化上面方法的构建*/
 
@@ -195,6 +255,11 @@ public class CircularAnimUtil {
 
     public static void hide(View myView) {
         hide(myView, MINI_RADIUS, PERFECT_MILLS);
+    }
+
+    public static void startActivityThenFinish(Activity thisActivity, Intent intent, View triggerView, int colorOrImageRes) {
+        // 默认只finish当前activity
+        startActivityThenFinish(thisActivity, intent, false, triggerView, colorOrImageRes, PERFECT_MILLS);
     }
 
 }

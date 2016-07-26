@@ -22,7 +22,6 @@
         android:text="Start Activity 图片"
         android:textColor="@android:color/white"/>
 
-
     <Button
         android:id="@+id/activity_color_btn"
         android:layout_width="wrap_content"
@@ -31,6 +30,16 @@
         android:background="@color/colorPrimary"
         android:padding="16dp"
         android:text="Start Activity 颜色"
+        android:textColor="@android:color/white"/>
+
+    <Button
+        android:id="@+id/activity_finish_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@color/colorPrimary"
+        android:padding="16dp"
+        android:text="Start Activity then finish"
         android:textColor="@android:color/white"/>
 
     <FrameLayout
