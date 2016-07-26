@@ -262,3 +262,7 @@ public class CircularAnimUtil {
 (感谢[im_brucezz](http://www.jianshu.com/users/693105fbc9cb/timeline)、[AkiossDev](http://www.jianshu.com/users/aedb3232c9e0/timeline)推荐的GIF录制器：licecap，非常好用，上面的gif已经用这个录制了～)
 
 And有没有傻瓜式发布项目到JCenter的教程推荐？看过几篇都不管用。囧 ~ 
+
+-------------------------------------------
+
+[iOS version is here](https://github.com/entotsu/TKSubmitTransition)
