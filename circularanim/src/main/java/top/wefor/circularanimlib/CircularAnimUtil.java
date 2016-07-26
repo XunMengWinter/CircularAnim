@@ -176,6 +176,10 @@ public class CircularAnimUtil {
 
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
             thisActivity.startActivity(intent);
+            if (isFinishAffinity)
+                thisActivity.finishAffinity(); // finish目标activity外的所有activity
+            else
+                thisActivity.finish(); // finish当前activity
             return;
         }
 
