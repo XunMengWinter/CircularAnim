@@ -38,12 +38,11 @@
 以及，你可以在startActivity时带上Intent:
 > startActivity(Activity thisActivity, Intent intent, View triggerView, int colorOrImageRes)
 
-
 还可以startActivityForResult:
 > startActivityForResult(Activity thisActivity, Intent intent, Integer requestCode, View triggerView, int colorOrImageRes)
 
 以及startActivity然后finish:
-> public static void startActivityThenFinish(Activity thisActivity, Intent intent, View triggerView, int colorOrImageRes)
+> startActivityThenFinish(Activity thisActivity, Intent intent, View triggerView, int colorOrImageRes)
 
 
 同理，startActivity同样可以设置时长。
