@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
-import top.wefor.circularanimlib.CircularAnimUtil;
+import top.wefor.circularanim.CircularAnimUtil;
 
 public class MainActivity extends AppCompatActivity {
 

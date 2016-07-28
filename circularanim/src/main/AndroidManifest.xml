@@ -1,4 +1,4 @@
-<manifest package="top.wefor.circularanimlib"
+<manifest package="top.wefor.circularanim"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application

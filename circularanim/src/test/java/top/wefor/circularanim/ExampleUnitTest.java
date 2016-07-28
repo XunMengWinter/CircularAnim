@@ -1,4 +1,4 @@
-package top.wefor.circularanimlib;
+package top.wefor.circularanim;
 
 import org.junit.Test;
 

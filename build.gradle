@@ -17,6 +17,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        // 在Project的build.gradle里添加：maven { url "https://jitpack.io" }
 //        maven { url "https://jitpack.io" }
     }
 }

@@ -1,4 +1,4 @@
-package top.wefor.circularanimlib;
+package top.wefor.circularanim;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
