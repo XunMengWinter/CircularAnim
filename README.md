@@ -10,6 +10,25 @@
 
 ![CircularAnim](https://raw.githubusercontent.com/XunMengWinter/source/master/gif/CircularAnimDemo.gif)
 
+### Compile
+So,你可以如下compile该项目，不过我还是推荐直接把这个类 [CircularAnimUtil](https://raw.githubusercontent.com/XunMengWinter/CircularAnim/master/circularanim/src/main/java/top/wefor/circularanim/CircularAnimUtil.java) 拷贝到项目里去。
+
+add this to the the project level build.gradle file
+
+```
+allprojects {
+    repositories {
+        ...
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+
+add the dependency to the the app level build.gradle file
+
+```
+compile 'com.github.XunMengWinter:CircularAnim:0.1.0'
+```
 
 ### 使用方法
 为了使用起来简单，我将动画封装成CircularAnimUtil.
@@ -48,27 +67,6 @@
 同理，startActivity同样可以设置时长。
 
 用起来非常的方便，一切逻辑性的东西都由帮助类搞定。
-
-### Compile
-
-so,现在你可以这样子compile该项目了，不过我还是推荐直接把这个类[CircularAnimUtil](https://raw.githubusercontent.com/XunMengWinter/CircularAnim/master/circularanim/src/main/java/top/wefor/circularanim/CircularAnimUtil.java)拷贝到项目里去。
-
-add this to the the project level build.gradle file
-
-```
-allprojects {
-    repositories {
-        ...
-        maven { url "https://jitpack.io" }
-    }
-}
-```
-
-add the dependency to the the app level build.gradle file
-
-```
-compile 'com.github.XunMengWinter:CircularAnim:master-SNAPSHOT'
-```
 
 
 ### 源码
