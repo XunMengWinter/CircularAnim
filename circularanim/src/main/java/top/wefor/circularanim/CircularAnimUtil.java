@@ -208,7 +208,6 @@ public class CircularAnimUtil {
     /**
      * 由满向中间收缩，直到隐藏。
      */
-    @SuppressLint("NewApi")
     public static void hide(final View myView, float endRadius, long durationMills) {
         actionVisible(false, myView, endRadius, durationMills);
     }
@@ -217,7 +216,6 @@ public class CircularAnimUtil {
      * 从指定View开始向四周伸张(伸张颜色或图片为colorOrImageRes), 然后进入另一个Activity,
      * 返回至 @thisActivity 后显示收缩动画。
      */
-    @SuppressLint("NewApi")
     public static void startActivityForResult(
             final Activity thisActivity, final Intent intent, final Integer requestCode, final Bundle bundle,
             final View triggerView, int colorOrImageRes, long durationMills) {
@@ -228,7 +226,6 @@ public class CircularAnimUtil {
     /**
      * 从指定View开始向四周伸张(伸张颜色或图片为colorOrImageRes), 然后启动@intent 并finish @thisActivity.
      */
-    @SuppressLint("NewApi")
     public static void startActivityThenFinish(
             final Activity thisActivity, final Intent intent, final boolean isFinishAffinity, final View triggerView,
             int colorOrImageRes, long durationMills) {
