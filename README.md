@@ -341,7 +341,23 @@ public class CircularAnimUtil {
 And有没有傻瓜式发布项目到JCenter的教程推荐？看过几篇都不管用。囧 ~ 
 (感谢[Issues区大家的推荐](https://github.com/XunMengWinter/CircularAnim/issues)，我使用了[twiceYuan](https://github.com/twiceyuan)推荐的[JitPack.io](https://jitpack.io/docs/ANDROID/)，用起来简单很多～)
 so,现在你可以这样子compile该项目了，不过我还是推荐直接把这个类[CircularAnimUtil](https://raw.githubusercontent.com/XunMengWinter/CircularAnim/master/circularanim/src/main/java/top/wefor/circularanim/CircularAnimUtil.java)拷贝到项目里去。
-> compile 'com.github.XunMengWinter:CircularAnim:master-SNAPSHOT'
+add this to the the project level build.gradle file
+
+```
+allprojects {
+    repositories {
+        ...
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+
+add the dependency to the the app level build.gradle file
+
+```
+compile 'com.github.XunMengWinter:CircularAnim:master-SNAPSHOT'
+```
+
 
 -------------------------------------------
 
