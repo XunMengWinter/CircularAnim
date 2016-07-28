@@ -42,13 +42,16 @@
 还可以startActivityForResult:
 > startActivityForResult(Activity thisActivity, Intent intent, Integer requestCode, View triggerView, int colorOrImageRes)
 
+以及startActivity然后finish:
+> public static void startActivityThenFinish(Activity thisActivity, Intent intent, View triggerView, int colorOrImageRes)
+
 
 同理，startActivity同样可以设置时长。
 
 用起来非常的方便，一切逻辑性的东西都由帮助类搞定。
 
 ### 源码
-下面贡献源码。你可以直接新建一个[CircularAnimUtil](https://raw.githubusercontent.com/XunMengWinter/CircularAnim/master/circularanim/src/main/java/top/wefor/circularanimlib/CircularAnimUtil.java)的类，然后把下面的代码复制进去就OK了。
+下面贡献源码。你可以直接新建一个[CircularAnimUtil](https://raw.githubusercontent.com/XunMengWinter/CircularAnim/master/circularanim/src/main/java/top/wefor/circularanim/CircularAnimUtil.java)的类，然后把下面的代码复制进去就OK了。
 
 另外，[GitHub Demo 地址在此](https://github.com/XunMengWinter/CircularAnim)，欢迎Star,欢迎喜欢，欢迎关注，哈哈哈 ^ ^ ~
 
@@ -59,6 +62,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -77,14 +81,16 @@ public class CircularAnimUtil {
 
     public static final long PERFECT_MILLS = 618;
     public static final int MINI_RADIUS = 0;
+    private static final int FINISH_NONE = 0, FINISH_SINGLE = 1, FINISH_ALL = 3;
 
-    /**
-     * 向四周伸张，直到完成显示。
-     */
     @SuppressLint("NewApi")
-    public static void show(View myView, float startRadius, long durationMills) {
+    private static void actionVisible(boolean isShow, final View myView, float miniRadius, long durationMills) {
+        // 版本判断
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
-            myView.setVisibility(View.VISIBLE);
+            if (isShow)
+                myView.setVisibility(View.VISIBLE);
+            else
+                myView.setVisibility(View.INVISIBLE);
             return;
         }
 
@@ -95,58 +101,74 @@ public class CircularAnimUtil {
         int h = myView.getHeight();
 
         // 勾股定理 & 进一法
-        int finalRadius = (int) Math.sqrt(w * w + h * h) + 1;
+        int maxRadius = (int) Math.sqrt(w * w + h * h) + 1;
 
+        float startRadius, endRadius;
+        if (isShow) {
+            // -< 从小到大
+            startRadius = miniRadius;
+            endRadius = maxRadius;
+        } else {
+            // >- 从大到校
+            startRadius = maxRadius;
+            endRadius = miniRadius;
+        }
         Animator anim =
-                ViewAnimationUtils.createCircularReveal(myView, cx, cy, startRadius, finalRadius);
+                ViewAnimationUtils.createCircularReveal(myView, cx, cy, startRadius, endRadius);
         myView.setVisibility(View.VISIBLE);
         anim.setDuration(durationMills);
-        anim.start();
-    }
 
-    /**
-     * 由满向中间收缩，直到隐藏。
-     */
-    @SuppressLint("NewApi")
-    public static void hide(final View myView, float endRadius, long durationMills) {
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
-            myView.setVisibility(View.INVISIBLE);
-            return;
-        }
-
-        int cx = (myView.getLeft() + myView.getRight()) / 2;
-        int cy = (myView.getTop() + myView.getBottom()) / 2;
-        int w = myView.getWidth();
-        int h = myView.getHeight();
-
-        // 勾股定理 & 进一法
-        int initialRadius = (int) Math.sqrt(w * w + h * h) + 1;
-
-        Animator anim =
-                ViewAnimationUtils.createCircularReveal(myView, cx, cy, initialRadius, endRadius);
-        anim.setDuration(durationMills);
-        anim.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                myView.setVisibility(View.INVISIBLE);
-            }
-        });
+        // 若收缩，则需要在动画结束时隐藏View
+        if (!isShow)
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    myView.setVisibility(View.INVISIBLE);
+                }
+            });
 
         anim.start();
     }
 
-    /**
-     * 从指定View开始向四周伸张(伸张颜色或图片为colorOrImageRes), 然后进入另一个Activity,
-     * 返回至 @thisActivity 后显示收缩动画。
-     */
-    @SuppressLint("NewApi")
-    public static void startActivityForResult(
-            final Activity thisActivity, final Intent intent, final Integer requestCode, final Bundle bundle,
-            final View triggerView, int colorOrImageRes, long durationMills) {
-
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
+    private static void startActivityOrFinish(final int finishType, final Activity thisActivity,
+                                              final Intent intent, final Integer requestCode,
+                                              final Bundle bundle) {
+        if (requestCode == null)
             thisActivity.startActivity(intent);
+        else if (bundle == null)
+            thisActivity.startActivityForResult(intent, requestCode);
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            // TODO 注意：低于api16 时
+            thisActivity.startActivityForResult(intent, requestCode, bundle);
+        } else
+            thisActivity.startActivityForResult(intent, requestCode);
+
+        switch (finishType) {
+            case FINISH_SINGLE:
+                // finish当前activity
+                thisActivity.finish();
+                break;
+            case FINISH_ALL:
+                // finish目标activity外的所有activity
+                // TODO 注意：低于api16 使用 finish() 代替 finishAffinity()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    thisActivity.finishAffinity();
+                } else
+                    thisActivity.finish();
+                break;
+        }
+    }
+
+    @SuppressLint("NewApi")
+    public static void actionStarActivity(
+            final int finishType, final Activity thisActivity, final Intent intent,
+            final Integer requestCode, final Bundle bundle, final View triggerView,
+            int colorOrImageRes, long durationMills) {
+
+        // 版本判断,小于5.0则无动画.
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
+            startActivityOrFinish(finishType, thisActivity, intent, requestCode, bundle);
             return;
         }
 
@@ -193,31 +215,82 @@ public class CircularAnimUtil {
                 // 默认渐隐过渡动画.
                 thisActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
-                // 默认显示返回至当前Activity的动画.
-                triggerView.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Animator anim =
-                                ViewAnimationUtils.createCircularReveal(view, cx, cy, finalRadius, 0);
-                        anim.setDuration(finalDuration);
-                        anim.addListener(new AnimatorListenerAdapter() {
+                switch (finishType) {
+                    case FINISH_NONE:
+                        // 默认显示返回至当前Activity的动画.
+                        triggerView.postDelayed(new Runnable() {
                             @Override
-                            public void onAnimationEnd(Animator animation) {
-                                super.onAnimationEnd(animation);
-                                try {
-                                    decorView.removeView(view);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                            public void run() {
+                                Animator anim =
+                                        ViewAnimationUtils.createCircularReveal(view, cx, cy, finalRadius, 0);
+                                anim.setDuration(finalDuration);
+                                anim.addListener(new AnimatorListenerAdapter() {
+                                    @Override
+                                    public void onAnimationEnd(Animator animation) {
+                                        super.onAnimationEnd(animation);
+                                        try {
+                                            decorView.removeView(view);
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                                anim.start();
                             }
-                        });
-                        anim.start();
-                    }
-                }, 1000);
+                        }, 1000);
+                        break;
+                    case FINISH_SINGLE:
+                        // finish当前activity
+                        thisActivity.finish();
+                        break;
+                    case FINISH_ALL:
+                        // finish目标activity外的所有activity
+                        thisActivity.finishAffinity();
+                        break;
+                }
 
             }
         });
         anim.start();
+    }
+
+
+    /**
+     * 向四周伸张，直到完成显示。
+     */
+    public static void show(View myView, float startRadius, long durationMills) {
+        actionVisible(true, myView, startRadius, durationMills);
+    }
+
+    /**
+     * 由满向中间收缩，直到隐藏。
+     */
+    @SuppressLint("NewApi")
+    public static void hide(final View myView, float endRadius, long durationMills) {
+        actionVisible(false, myView, endRadius, durationMills);
+    }
+
+    /**
+     * 从指定View开始向四周伸张(伸张颜色或图片为colorOrImageRes), 然后进入另一个Activity,
+     * 返回至 @thisActivity 后显示收缩动画。
+     */
+    @SuppressLint("NewApi")
+    public static void startActivityForResult(
+            final Activity thisActivity, final Intent intent, final Integer requestCode, final Bundle bundle,
+            final View triggerView, int colorOrImageRes, long durationMills) {
+
+        actionStarActivity(FINISH_NONE, thisActivity, intent, requestCode, bundle, triggerView, colorOrImageRes, durationMills);
+    }
+
+    /**
+     * 从指定View开始向四周伸张(伸张颜色或图片为colorOrImageRes), 然后启动@intent 并finish @thisActivity.
+     */
+    @SuppressLint("NewApi")
+    public static void startActivityThenFinish(
+            final Activity thisActivity, final Intent intent, final boolean isFinishAffinity, final View triggerView,
+            int colorOrImageRes, long durationMills) {
+        int finishType = isFinishAffinity ? FINISH_ALL : FINISH_SINGLE;
+        actionStarActivity(finishType, thisActivity, intent, null, null, triggerView, colorOrImageRes, durationMills);
     }
 
 
@@ -251,6 +324,11 @@ public class CircularAnimUtil {
         hide(myView, MINI_RADIUS, PERFECT_MILLS);
     }
 
+    public static void startActivityThenFinish(Activity thisActivity, Intent intent, View triggerView, int colorOrImageRes) {
+        // 默认只finish当前activity
+        startActivityThenFinish(thisActivity, intent, false, triggerView, colorOrImageRes, PERFECT_MILLS);
+    }
+
 }
 
 ```
@@ -262,6 +340,9 @@ public class CircularAnimUtil {
 (感谢[im_brucezz](http://www.jianshu.com/users/693105fbc9cb/timeline)、[AkiossDev](http://www.jianshu.com/users/aedb3232c9e0/timeline)推荐的GIF录制器：licecap，非常好用，上面的gif已经用这个录制了～)
 
 And有没有傻瓜式发布项目到JCenter的教程推荐？看过几篇都不管用。囧 ~ 
+(感谢[Issues区大家的推荐](https://github.com/XunMengWinter/CircularAnim/issues)，我使用了[twiceYuan](https://github.com/twiceyuan)推荐的[JitPack.io](https://jitpack.io/docs/ANDROID/)，用起来简单很多～)
+so,现在你可以这样子compile该项目了，不过我还是推荐直接把这个类[CircularAnimUtil](https://raw.githubusercontent.com/XunMengWinter/CircularAnim/master/circularanim/src/main/java/top/wefor/circularanim/CircularAnimUtil.java)拷贝到项目里去。
+> compile 'com.github.XunMengWinter:CircularAnim:master-SNAPSHOT'
 
 -------------------------------------------
 
