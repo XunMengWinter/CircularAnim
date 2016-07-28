@@ -56,6 +56,7 @@ public class CircularAnimUtil {
             startRadius = maxRadius;
             endRadius = miniRadius;
         }
+
         Animator anim =
                 ViewAnimationUtils.createCircularReveal(myView, cx, cy, startRadius, endRadius);
         myView.setVisibility(View.VISIBLE);
@@ -104,7 +105,7 @@ public class CircularAnimUtil {
     }
 
     @SuppressLint("NewApi")
-    public static void actionStarActivity(
+    private static void actionStarActivity(
             final int finishType, final Activity thisActivity, final Intent intent,
             final Integer requestCode, final Bundle bundle, final View triggerView,
             int colorOrImageRes, long durationMills) {
@@ -131,15 +132,15 @@ public class CircularAnimUtil {
         int maxW = Math.max(cx, w - cx);
         int maxH = Math.max(cy, h - cy);
         final int finalRadius = (int) Math.sqrt(maxW * maxW + maxH * maxH) + 1;
-        Animator
-                anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
+
+        Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
         int maxRadius = (int) Math.sqrt(w * w + h * h) + 1;
         // 若使用默认时长，则需要根据水波扩散的距离来计算实际时间
         if (durationMills == PERFECT_MILLS) {
             // 算出实际边距与最大边距的比率
             double rate = 1d * finalRadius / maxRadius;
-            // 水波扩散的距离与扩散时间成正比
-            durationMills = (long) (PERFECT_MILLS * rate);
+            // 为了让用户便于感触到水波，速度应随最大边距的变小而越慢，扩散时间应随最大边距的变小而变小，因此比率应在 @rate 与 1 之间。
+            durationMills = (long) (PERFECT_MILLS * Math.sqrt(rate));
         }
         final long finalDuration = durationMills;
         anim.setDuration(finalDuration);
@@ -224,7 +225,7 @@ public class CircularAnimUtil {
     }
 
     /**
-     * 从指定View开始向四周伸张(伸张颜色或图片为colorOrImageRes), 然后启动@intent 并finish @thisActivity.
+     * 从指定View开始向四周伸张(伸张颜色或图片为colorOrImageRes), 然后启动@intent 并finish @thisActivity/之前所有的Activity.
      */
     public static void startActivityThenFinish(
             final Activity thisActivity, final Intent intent, final boolean isFinishAffinity, final View triggerView,
@@ -265,7 +266,7 @@ public class CircularAnimUtil {
     }
 
     public static void startActivityThenFinish(Activity thisActivity, Intent intent, View triggerView, int colorOrImageRes) {
-        // 默认只finish当前activity
+        // 默认finish当前activity
         startActivityThenFinish(thisActivity, intent, false, triggerView, colorOrImageRes, PERFECT_MILLS);
     }
 
