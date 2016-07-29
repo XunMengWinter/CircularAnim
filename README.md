@@ -27,7 +27,7 @@ allprojects {
 add the dependency to the the app level build.gradle file
 
 ```
-compile 'com.github.XunMengWinter:CircularAnim:0.2.0'
+compile 'com.github.XunMengWinter:CircularAnim:0.2.4'
 ```
 
 ### 使用方法
