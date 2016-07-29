@@ -12,10 +12,11 @@
 ![CircularAnim](https://raw.githubusercontent.com/XunMengWinter/source/master/gif/CircularAnimDemo.gif)
 
 ### Compile
+最新可用版本[![](https://jitpack.io/v/XunMengWinter/CircularAnim.svg)](https://jitpack.io/#XunMengWinter/CircularAnim)
+
 So,你可以如下compile该项目，不过我还是推荐直接把这个类 [CircularAnimUtil](https://raw.githubusercontent.com/XunMengWinter/CircularAnim/master/circularanim/src/main/java/top/wefor/circularanim/CircularAnimUtil.java) 拷贝到项目里去。
 
 add this to the the project level build.gradle file
-[![JitPack最新可用版本](https://jitpack.io/v/XunMengWinter/CircularAnim.svg)](https://jitpack.io/#XunMengWinter/CircularAnim)
 
 ```
 allprojects {
