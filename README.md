@@ -28,12 +28,10 @@ allprojects {
 ```
 
 add the dependency to the the app level build.gradle file
-*replace {x.y.z} with the last version.
 
 ```
+// replace {x.y.z} with the last version.
 compile 'com.github.XunMengWinter:CircularAnim:{x.y.z}'
-//若果有问题请
-//compile 'com.github.XunMengWinter:CircularAnim:0.2.1'
 ```
 
 ### 使用方法
