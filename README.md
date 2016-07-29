@@ -27,7 +27,7 @@ allprojects {
 add the dependency to the the app level build.gradle file
 
 ```
-compile 'com.github.XunMengWinter:CircularAnim:0.1.0'
+compile 'com.github.XunMengWinter:CircularAnim:0.2.0'
 ```
 
 ### 使用方法
@@ -39,6 +39,14 @@ compile 'com.github.XunMengWinter:CircularAnim:0.1.0'
 
 同理，让按钮伸展开：
 > CircularAnimUtil.show(mChangeBtn);
+
+
+以View为水波触发点收缩其它View:
+> hideOther(View triggerView, View otherView)
+
+
+以View为水波触发点伸展其它View:
+> showOther(View triggerView, View otherView)
 
 
 水波般铺满指定颜色并启动一个Activity:
