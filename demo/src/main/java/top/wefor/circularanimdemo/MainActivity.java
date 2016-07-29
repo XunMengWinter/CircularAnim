@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import top.wefor.circularanim.CircularAnimUtil;
@@ -14,6 +16,9 @@ public class MainActivity extends AppCompatActivity {
 
     ProgressBar mProgressBar;
     Button mChangeBtn, mActivityImageBtn, mActivityColorBtn, mActivityFinishBtn;
+    ImageView mLogoBtnIv;
+    LinearLayout mContentLayout;
+    boolean isContentVisible = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         mActivityImageBtn = (Button) findViewById(R.id.activity_image_btn);
         mActivityColorBtn = (Button) findViewById(R.id.activity_color_btn);
         mActivityFinishBtn = (Button) findViewById(R.id.activity_finish_btn);
+        mLogoBtnIv = (ImageView) findViewById(R.id.logoBtn_iv);
+        mContentLayout = (LinearLayout) findViewById(R.id.content_layout);
 
         mChangeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +74,20 @@ public class MainActivity extends AppCompatActivity {
                 // 先将颜色展出铺满，然后启动新的Activity并finish当前Activity.
                 Intent intent = new Intent(MainActivity.this, EmptyActivity.class);
                 CircularAnimUtil.startActivityThenFinish(MainActivity.this, intent, view, R.color.colorPrimary);
+            }
+        });
+
+        mLogoBtnIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.animate().rotationBy(90);
+                // 以 @mLogoBtnIv 为中心，收缩或伸展 @mContentLayout
+                if (isContentVisible)
+                    CircularAnimUtil.hideOther(mLogoBtnIv, mContentLayout);
+                else
+                    CircularAnimUtil.showOther(mLogoBtnIv, mContentLayout);
+
+                isContentVisible = !isContentVisible;
             }
         });
     }

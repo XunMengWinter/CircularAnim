@@ -26,6 +26,9 @@ public class CircularAnimUtil {
     public static final int MINI_RADIUS = 0;
     private static final int FINISH_NONE = 0, FINISH_SINGLE = 1, FINISH_ALL = 3;
 
+    /**
+     * 为 myView 自身添加显示隐藏的动画
+     */
     @SuppressLint("NewApi")
     private static void actionVisible(boolean isShow, final View myView, float miniRadius, long durationMills) {
         // 版本判断
@@ -74,6 +77,80 @@ public class CircularAnimUtil {
 
         anim.start();
     }
+
+    /**
+     * 以 @triggerView 为中心为 @animView 添加显示隐藏的动画
+     */
+    @SuppressLint("NewApi")
+    private static void actionOtherVisible(boolean isShow, final View triggerView, final View animView,
+                                           float miniRadius, long durationMills) {
+        // 版本判断
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
+            if (isShow)
+                animView.setVisibility(View.VISIBLE);
+            else
+                animView.setVisibility(View.INVISIBLE);
+            return;
+        }
+
+        int[] tvLocation = new int[2];
+        triggerView.getLocationInWindow(tvLocation);
+        final int tvCX = tvLocation[0] + triggerView.getWidth() / 2;
+        final int tvCY = tvLocation[1] + triggerView.getHeight() / 2;
+
+        int[] avLocation = new int[2];
+        animView.getLocationInWindow(avLocation);
+        final int avLX = avLocation[0];
+        final int avTY = avLocation[1];
+
+        int triggerX = Math.max(avLX, tvCX);
+        triggerX = Math.min(triggerX, avLX + animView.getWidth());
+
+        int triggerY = Math.max(avTY, tvCY);
+        triggerY = Math.min(triggerY, avTY + animView.getHeight());
+
+        // 以上全为绝对坐标
+
+        int avW = animView.getWidth();
+        int avH = animView.getHeight();
+
+        int rippleCX = triggerX - avLX;
+        int rippleCY = triggerY - avTY;
+
+        // 计算水波中心点至 @animView 边界的最大距离
+        int maxW = Math.max(rippleCX, avW - rippleCX);
+        int maxH = Math.max(rippleCY, avH - rippleCY);
+        final int maxRadius = (int) Math.sqrt(maxW * maxW + maxH * maxH) + 1;
+
+        float startRadius, endRadius;
+        if (isShow) {
+            // -< 从小到大
+            startRadius = miniRadius;
+            endRadius = maxRadius;
+        } else {
+            // >- 从大到校
+            startRadius = maxRadius;
+            endRadius = miniRadius;
+        }
+
+        Animator anim = ViewAnimationUtils.createCircularReveal(
+                animView, triggerX - avLX, triggerY - avTY, startRadius, endRadius);
+        animView.setVisibility(View.VISIBLE);
+        anim.setDuration(durationMills);
+
+        // 若收缩，则需要在动画结束时隐藏View
+        if (!isShow)
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    animView.setVisibility(View.INVISIBLE);
+                }
+            });
+
+        anim.start();
+    }
+
 
     private static void startActivityOrFinish(final int finishType, final Activity thisActivity,
                                               final Intent intent, final Integer requestCode,
@@ -257,6 +334,11 @@ public class CircularAnimUtil {
         startActivity(thisActivity, new Intent(thisActivity, targetClass), triggerView, colorOrImageRes, PERFECT_MILLS);
     }
 
+    public static void startActivityThenFinish(Activity thisActivity, Intent intent, View triggerView, int colorOrImageRes) {
+        // 默认finish当前activity
+        startActivityThenFinish(thisActivity, intent, false, triggerView, colorOrImageRes, PERFECT_MILLS);
+    }
+
     public static void show(View myView) {
         show(myView, MINI_RADIUS, PERFECT_MILLS);
     }
@@ -265,9 +347,12 @@ public class CircularAnimUtil {
         hide(myView, MINI_RADIUS, PERFECT_MILLS);
     }
 
-    public static void startActivityThenFinish(Activity thisActivity, Intent intent, View triggerView, int colorOrImageRes) {
-        // 默认finish当前activity
-        startActivityThenFinish(thisActivity, intent, false, triggerView, colorOrImageRes, PERFECT_MILLS);
+    public static void showOther(View triggerView, View otherView) {
+        actionOtherVisible(true, triggerView, otherView, MINI_RADIUS, PERFECT_MILLS);
+    }
+
+    public static void hideOther(View triggerView, View otherView) {
+        actionOtherVisible(false, triggerView, otherView, MINI_RADIUS, PERFECT_MILLS);
     }
 
 }
