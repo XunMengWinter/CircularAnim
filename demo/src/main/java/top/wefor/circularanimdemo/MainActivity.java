@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mChangeBtn = (Button) findViewById(R.id.change_btn);
         mActivityImageBtn = (Button) findViewById(R.id.activity_image_btn);

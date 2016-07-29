@@ -134,7 +134,7 @@ public class CircularAnimUtil {
         }
 
         Animator anim = ViewAnimationUtils.createCircularReveal(
-                animView, triggerX - avLX, triggerY - avTY, startRadius, endRadius);
+                animView, rippleCX, rippleCY, startRadius, endRadius);
         animView.setVisibility(View.VISIBLE);
         anim.setDuration(durationMills);
 
