@@ -2,8 +2,6 @@
 
 English | [中文](https://github.com/XunMengWinter/CircularAnim/blob/master/README-ZH.md)
 
-[iOS version](https://github.com/entotsu/TKSubmitTransition)
-
 First, let's see a quick demo of the UI:
 ![Demo from Dribbble](https://d13yacurqjgara.cloudfront.net/users/62319/screenshots/1945593/shot.gif)
 
@@ -94,5 +92,6 @@ I would like to thank
 Feedback is welcome on the [Issues](https://github.com/XunMengWinter/CircularAnim/issues) page.
 I used [JitPack.io](https://jitpack.io/docs/ANDROID/) as recommended by [YangHui](https://github.com/kyze8439690) and [twiceYuan](https://github.com/twiceyuan), which  was much easier to use than JCenter, which I had no success with.
  
+[iOS version](https://github.com/entotsu/TKSubmitTransition)
 
 Translation: [Szabolcs Pasztor](https://github.com/spqpad)
