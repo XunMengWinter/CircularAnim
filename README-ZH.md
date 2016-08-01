@@ -1,5 +1,4 @@
-## CircularAnim
-[![](https://jitpack.io/v/XunMengWinter/CircularAnim.svg)](https://jitpack.io/#XunMengWinter/CircularAnim)
+## CircularAnim [![](https://jitpack.io/v/XunMengWinter/CircularAnim.svg)](https://jitpack.io/#XunMengWinter/CircularAnim)
 
 [English](https://github.com/XunMengWinter/CircularAnim/blob/master/README.md) | 中文
 
