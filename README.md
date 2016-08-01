@@ -92,6 +92,8 @@ I would like to thank
 Feedback is welcome on the [Issues](https://github.com/XunMengWinter/CircularAnim/issues) page.
 I used [JitPack.io](https://jitpack.io/docs/ANDROID/) as recommended by [YangHui](https://github.com/kyze8439690) and [twiceYuan](https://github.com/twiceyuan), which  was much easier to use than JCenter, which I had no success with.
  
+ -------------------------------------------
+ 
 [iOS version](https://github.com/entotsu/TKSubmitTransition)
 
 Translation: [Szabolcs Pasztor](https://github.com/spqpad)
