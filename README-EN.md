@@ -1,6 +1,6 @@
 ## CircularAnim [![](https://jitpack.io/v/XunMengWinter/CircularAnim.svg)](https://jitpack.io/#XunMengWinter/CircularAnim)
 
-English | [中文](https://github.com/XunMengWinter/CircularAnim/blob/master/README-ZH.md)
+English | [中文](https://github.com/XunMengWinter/CircularAnim/blob/master/README.md)
 
 First, let's see a quick demo of the UI:
 ![Demo from Dribbble](https://d13yacurqjgara.cloudfront.net/users/62319/screenshots/1945593/shot.gif)
