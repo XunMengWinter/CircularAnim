@@ -1,5 +1,4 @@
-## CircularAnim
-[![](https://jitpack.io/v/XunMengWinter/CircularAnim.svg)](https://jitpack.io/#XunMengWinter/CircularAnim)
+## CircularAnim[![](https://jitpack.io/v/XunMengWinter/CircularAnim.svg)](https://jitpack.io/#XunMengWinter/CircularAnim)
 
 English | [中文](https://github.com/XunMengWinter/CircularAnim/blob/master/README-ZH.md)
 
@@ -16,7 +15,7 @@ The results I was able to achieve:
 ![CircularAnim](https://raw.githubusercontent.com/XunMengWinter/source/master/gif/CircularAnimDemo.gif)
 
 ### Configuration
-Most recent version: [![](https://jitpack.io/v/XunMengWinter/CircularAnim.svg)](https://jitpack.io/#XunMengWinter/CircularAnim)
+Latest version: [![](https://jitpack.io/v/XunMengWinter/CircularAnim.svg)](https://jitpack.io/#XunMengWinter/CircularAnim)
 
 
 Instructions for compiling the project follow. As an alternative, you can just take the [CircularAnimUtil](https://raw.githubusercontent.com/XunMengWinter/CircularAnim/master/circularanim/src/main/java/top/wefor/circularanim/CircularAnimUtil.java) class and use it directly in your project.
