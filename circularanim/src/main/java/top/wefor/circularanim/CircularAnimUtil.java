@@ -220,7 +220,8 @@ public class CircularAnimUtil {
             durationMills = (long) (PERFECT_MILLS * Math.sqrt(rate));
         }
         final long finalDuration = durationMills;
-        anim.setDuration(finalDuration);
+        // 由于thisActivity.startActivity()会有所停顿，所以进入的水波动画应比退出的水波动画时间短才能保持视觉上的一致。
+        anim.setDuration((long) (finalDuration*0.9));
         anim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
