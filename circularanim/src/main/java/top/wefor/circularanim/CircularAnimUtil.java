@@ -84,7 +84,7 @@ public class CircularAnimUtil {
      * 以 @triggerView 为中心为 @animView 添加显示隐藏的动画
      */
     @SuppressLint("NewApi")
-    private static void actionOtherVisible(boolean isShow, final View triggerView, final View animView,
+    private static void actionOtherVisible(final boolean isShow, final View triggerView, final View animView,
                                            float miniRadius, long durationMills) {
         // 版本判断
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
@@ -140,15 +140,16 @@ public class CircularAnimUtil {
         animView.setVisibility(View.VISIBLE);
         anim.setDuration(durationMills);
 
-        // 若收缩，则需要在动画结束时隐藏View
-        if (!isShow)
-            anim.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
+        anim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                if (isShow)
+                    animView.setVisibility(View.VISIBLE);
+                else
                     animView.setVisibility(View.INVISIBLE);
-                }
-            });
+            }
+        });
 
         anim.start();
     }
