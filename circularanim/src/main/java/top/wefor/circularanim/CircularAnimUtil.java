@@ -30,7 +30,7 @@ public class CircularAnimUtil {
      * 为 myView 自身添加显示隐藏的动画
      */
     @SuppressLint("NewApi")
-    private static void actionVisible(boolean isShow, final View myView, float miniRadius, long durationMills) {
+    private static void actionVisible(final boolean isShow, final View myView, float miniRadius, long durationMills) {
         // 版本判断
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
             if (isShow)
@@ -65,15 +65,17 @@ public class CircularAnimUtil {
         myView.setVisibility(View.VISIBLE);
         anim.setDuration(durationMills);
 
-        // 若收缩，则需要在动画结束时隐藏View
-        if (!isShow)
-            anim.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
+        anim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                // 无论显示还是隐藏，都应当在动画结束后执行。
+                if (isShow)
+                    myView.setVisibility(View.VISIBLE);
+                else
                     myView.setVisibility(View.INVISIBLE);
-                }
-            });
+            }
+        });
 
         anim.start();
     }
@@ -221,7 +223,7 @@ public class CircularAnimUtil {
         }
         final long finalDuration = durationMills;
         // 由于thisActivity.startActivity()会有所停顿，所以进入的水波动画应比退出的水波动画时间短才能保持视觉上的一致。
-        anim.setDuration((long) (finalDuration*0.9));
+        anim.setDuration((long) (finalDuration * 0.9));
         anim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
