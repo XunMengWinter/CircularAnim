@@ -68,7 +68,7 @@ compile 'com.github.XunMengWinter:CircularAnim:{x.y.z}'
 这里，你还可以放图片：
 > .colorOrImageRes(R.mipmap.img_huoer_black)
 
-同时，你还可以设置时长、半径、转场动画等参数。
+同时，你还可以设置时长、半径、转场动画、动画结束监听器等参数。
 
 用起来非常的方便，一切逻辑性的东西都由帮助类搞定。
 
