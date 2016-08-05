@@ -36,56 +36,47 @@ compile 'com.github.XunMengWinter:CircularAnim:{x.y.z}'
 ```
 
 ### 使用方法
-为了使用起来简单，我将动画封装成CircularAnimUtil.
+为了使用起来简单，我将动画封装成CircularAnim.
 
 现在，让按钮收缩只需一行代码，如下：
-> CircularAnimUtil.hide(mChangeBtn);
+> CircularAnim.hide(mChangeBtn).go();
 
 
 同理，让按钮伸展开：
-> CircularAnimUtil.show(mChangeBtn);
+> CircularAnim.show(mChangeBtn).go();
 
 
 以View为水波触发点收缩其它View:
-> hideOther(View triggerView, View otherView)
+> CircularAnim.hide(mContentLayout).triggerView(mLogoBtnIv).go();
 
 
 以View为水波触发点伸展其它View:
-> showOther(View triggerView, View otherView)
+> CircularAnim.show(mContentLayout).triggerView(mLogoBtnIv).go();
 
 
 水波般铺满指定颜色并启动一个Activity:
-> CircularAnimUtil.startActivity(MainActivity.this, EmptyActivity.class, view, R.color.colorPrimary);
+> CircularAnim.fullActivity(MainActivity.this, view)
+                        .colorOrImageRes(R.color.colorPrimary)
+                        .go(new CircularAnim.OnAnimationEndListener() {
+                            @Override
+                            public void onAnimationEnd() {
+                                startActivity(new Intent(MainActivity.this, EmptyActivity.class));
+                            }
+                        });
 
 
 这里，你还可以放图片：
-> CircularAnimUtil.startActivity(MainActivity.this, EmptyActivity.class, view, R.mipmap.img_huoer_black);
+> .colorOrImageRes(R.mipmap.img_huoer_black)
 
-也许在显示或隐藏视图时，你想要设置半径和时长，你可以调用这个方法：
-> 显示：show(View myView, float startRadius, long durationMills)
-
-> 隐藏：hide(final View myView, float endRadius, long durationMills) 
-
-
-以及，你可以在startActivity时带上Intent:
-> startActivity(Activity thisActivity, Intent intent, View triggerView, int colorOrImageRes)
-
-还可以startActivityForResult:
-> startActivityForResult(Activity thisActivity, Intent intent, Integer requestCode, View triggerView, int colorOrImageRes)
-
-以及startActivity然后finish:
-> startActivityThenFinish(Activity thisActivity, Intent intent, View triggerView, int colorOrImageRes)
-
-
-同理，startActivity同样可以设置时长。
+同时，你还可以设置时长、半径、转场动画等参数。
 
 用起来非常的方便，一切逻辑性的东西都由帮助类搞定。
 
 
 ### 源码
-下面贡献源码。你可以直接新建一个[CircularAnimUtil](https://raw.githubusercontent.com/XunMengWinter/CircularAnim/master/circularanim/src/main/java/top/wefor/circularanim/CircularAnimUtil.java)的类，然后把下面的代码复制进去就OK了。
+下面贡献源码。你可以直接新建一个[CircularAnim](https://raw.githubusercontent.com/XunMengWinter/CircularAnim/master/circularanim/src/main/java/top/wefor/circularanim/CircularAnim.java)的类，然后把下面的代码复制进去就OK了。
 
-[点此查看源码](https://raw.githubusercontent.com/XunMengWinter/CircularAnim/master/circularanim/src/main/java/top/wefor/circularanim/CircularAnimUtil.java)
+[点此查看源码](https://raw.githubusercontent.com/XunMengWinter/CircularAnim/master/circularanim/src/main/java/top/wefor/circularanim/CircularAnim.java)
 
 另外，[GitHub Demo 地址在此](https://github.com/XunMengWinter/CircularAnim)，欢迎Star,欢迎喜欢，欢迎关注，哈哈哈 ^ ^ ~
 
