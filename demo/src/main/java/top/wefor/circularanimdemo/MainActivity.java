@@ -3,6 +3,7 @@ package top.wefor.circularanimdemo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import top.wefor.circularanim.CircularAnimUtil;
+import top.wefor.circularanim.CircularAnim;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,13 +34,17 @@ public class MainActivity extends AppCompatActivity {
         mLogoBtnIv = (ImageView) findViewById(R.id.logoBtn_iv);
         mContentLayout = (LinearLayout) findViewById(R.id.content_layout);
 
+        CircularAnim.show(null);
+        new AlertDialog.Builder(this).create().show();
+
         mChangeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mChangeBtn.setEnabled(false);
                 mProgressBar.setVisibility(View.VISIBLE);
                 // 收缩按钮
-                CircularAnimUtil.hide(mChangeBtn);
+                CircularAnim.hide(mChangeBtn).go();
+//                CircularAnimUtil.hide(mChangeBtn);
             }
         });
 
@@ -49,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
                 mProgressBar.setVisibility(View.GONE);
                 mChangeBtn.setEnabled(true);
                 // 伸展按钮
-                CircularAnimUtil.show(mChangeBtn);
+                CircularAnim.show(mChangeBtn).go();
+//                CircularAnimUtil.show(mChangeBtn);
             }
         });
 
@@ -57,7 +63,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 先将图片展出铺满，然后启动新的Activity
-                CircularAnimUtil.startActivity(MainActivity.this, EmptyActivity.class, view, R.mipmap.img_huoer_black);
+                CircularAnim.fullActivity(MainActivity.this, view, R.mipmap.img_huoer_black,
+                        new CircularAnim.OnAnimationEndListener() {
+                            @Override
+                            public void onAnimationEnd() {
+                                startActivity(new Intent(MainActivity.this, EmptyActivity.class));
+                            }
+                        }).go();
+//                CircularAnimUtil.startActivity(MainActivity.this, EmptyActivity.class, view, R.mipmap.img_huoer_black);
             }
         });
 
@@ -65,7 +78,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 先将颜色展出铺满，然后启动新的Activity
-                CircularAnimUtil.startActivity(MainActivity.this, EmptyActivity.class, view, R.color.colorPrimary);
+                CircularAnim.fullActivity(MainActivity.this, view, R.color.colorPrimary,
+                        new CircularAnim.OnAnimationEndListener() {
+                            @Override
+                            public void onAnimationEnd() {
+                                startActivity(new Intent(MainActivity.this, EmptyActivity.class));
+                            }
+                        }).go();
+//                CircularAnimUtil.startActivity(MainActivity.this, EmptyActivity.class, view, R.color.colorPrimary);
             }
         });
 
@@ -73,8 +93,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 先将颜色展出铺满，然后启动新的Activity并finish当前Activity.
-                Intent intent = new Intent(MainActivity.this, EmptyActivity.class);
-                CircularAnimUtil.startActivityThenFinish(MainActivity.this, intent, view, R.color.colorPrimary);
+                CircularAnim.fullActivity(MainActivity.this, view, R.color.colorPrimary,
+                        new CircularAnim.OnAnimationEndListener() {
+                            @Override
+                            public void onAnimationEnd() {
+                                startActivity(new Intent(MainActivity.this, EmptyActivity.class));
+                                finish();
+                            }
+                        }).go();
+//                Intent intent = new Intent(MainActivity.this, EmptyActivity.class);
+//                CircularAnimUtil.startActivityThenFinish(MainActivity.this, intent, view, R.color.colorPrimary);
             }
         });
 
@@ -83,10 +111,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 view.animate().rotationBy(90);
                 // 以 @mLogoBtnIv 为中心，收缩或伸展 @mContentLayout
-                if (isContentVisible)
-                    CircularAnimUtil.hideOther(mLogoBtnIv, mContentLayout);
-                else
-                    CircularAnimUtil.showOther(mLogoBtnIv, mContentLayout);
+                if (isContentVisible) {
+                    CircularAnim.hide(mContentLayout)
+                            .triggerView(mLogoBtnIv)
+                            .go();
+//                    CircularAnimUtil.hideOther(mLogoBtnIv, mContentLayout);
+                } else {
+                    CircularAnim.show(mContentLayout)
+                            .triggerView(mLogoBtnIv)
+                            .go();
+//                    CircularAnimUtil.showOther(mLogoBtnIv, mContentLayout);
+                }
 
                 isContentVisible = !isContentVisible;
             }

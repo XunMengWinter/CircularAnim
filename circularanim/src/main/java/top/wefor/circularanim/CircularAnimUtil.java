@@ -20,6 +20,7 @@ import android.widget.ImageView;
  *
  * @author ice
  */
+@Deprecated //this class was replaced by CircularAnim.class
 public class CircularAnimUtil {
 
     public static final long PERFECT_MILLS = 618;
