@@ -16,7 +16,7 @@ The results I was able to achieve:
 Latest version: [![](https://jitpack.io/v/XunMengWinter/CircularAnim.svg)](https://jitpack.io/#XunMengWinter/CircularAnim)
 
 
-Instructions for compiling the project follow. As an alternative, you can just take the [CircularAnimUtil](https://raw.githubusercontent.com/XunMengWinter/CircularAnim/master/circularanim/src/main/java/top/wefor/circularanim/CircularAnimUtil.java) class and use it directly in your project.
+Instructions for compiling the project follow. As an alternative, you can just take the [CircularAnim](https://raw.githubusercontent.com/XunMengWinter/CircularAnim/master/circularanim/src/main/java/top/wefor/circularanim/CircularAnim.java) class and use it directly in your project.
 
 
 - Add this to the the project level build.gradle file
@@ -41,44 +41,37 @@ compile 'com.github.XunMengWinter:CircularAnim:{x.y.z}'
 For ease of use, below are provided examples on how to interact with CircularAnimUtil.
 
 Hiding a button only requires the following code:
-> CircularAnimUtil.hide(mChangeBtn);
+> CircularAnim.hide(mChangeBtn).go();
 
 Likewise, for showing:
-> CircularAnimUtil.show(mChangeBtn);
+> CircularAnim.show(mChangeBtn).go();
 
 With a view's ripple animation - trigger hiding another View:
-> hideOther(View triggerView, View otherView)
+> CircularAnim.hide(mContentLayout).triggerView(mLogoBtnIv).go();
 
 With a view's ripple animation - trigger showing another View:
-> showOther(View triggerView, View otherView)
+> CircularAnim.show(mContentLayout).triggerView(mLogoBtnIv).go();
 
 To set the color and start an Activity for a ripple animation:
-> CircularAnimUtil.startActivity(MainActivity.this, EmptyActivity.class, view, R.color.colorPrimary);
-
+> CircularAnim.fullActivity(MainActivity.this, view)
+                        .colorOrImageRes(R.color.colorPrimary)
+                        .go(new CircularAnim.OnAnimationEndListener() {
+                            @Override
+                            public void onAnimationEnd() {
+                                startActivity(new Intent(MainActivity.this, EmptyActivity.class));
+                            }
+                        });
+                        
 You can also supply an image:
-> CircularAnimUtil.startActivity(MainActivity.this, EmptyActivity.class, view, R.mipmap.img_huoer_black);
+> .colorOrImageRes(R.mipmap.img_huoer_black)
 
-When showing or hiding an image, you may want to set the radius or time, which can be done by calling with these signatures:
-> show(View myView, float startRadius, long durationMills)
-
-> hide(final View myView, float endRadius, long durationMills) 
-
-Upon calling startActivity, you can also provide an Intent:
-> startActivity(Activity thisActivity, Intent intent, View triggerView, int colorOrImageRes)
-
-You may also use startActivityForResult:
-> startActivityForResult(Activity thisActivity, Intent intent, Integer requestCode, View triggerView, int colorOrImageRes)
-
-To first call startActivity, then finish:
-> startActivityThenFinish(Activity thisActivity, Intent intent, View triggerView, int colorOrImageRes)
-
-Likewise, setting the length of time is also possible with startActivity.
+Likewise, you can also set duration, radius, trantionAnim and animation end listener.
 
 
 ### Source
-The source is available below. You can directly construct a new [CircularAnimUtil](https://raw.githubusercontent.com/XunMengWinter/CircularAnim/master/circularanim/src/main/java/top/wefor/circularanim/CircularAnimUtil.java), or just use one or more parts from the source.
+The source is available below. You can directly construct a new [CircularAnim](https://raw.githubusercontent.com/XunMengWinter/CircularAnim/master/circularanim/src/main/java/top/wefor/circularanim/CircularAnim.java), or just use one or more parts from the source.
 
-[View the source code here](https://raw.githubusercontent.com/XunMengWinter/CircularAnim/master/circularanim/src/main/java/top/wefor/circularanim/CircularAnimUtil.java)
+[View the source code here](https://raw.githubusercontent.com/XunMengWinter/CircularAnim/master/circularanim/src/main/java/top/wefor/circularanim/CircularAnim.java)
 
 Additionally, the project is [available on GitHub](https://github.com/XunMengWinter/CircularAnim). Interest, stars and thanking is very much welcome!
 
