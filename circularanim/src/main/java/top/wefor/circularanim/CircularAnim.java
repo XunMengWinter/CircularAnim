@@ -30,21 +30,6 @@ public class CircularAnim {
         void onAnimationEnd();
     }
 
-    public static VisibleBuilder show(View animView) {
-        return new VisibleBuilder(animView, true);
-    }
-
-    public static VisibleBuilder hide(View animView) {
-        return new VisibleBuilder(animView, false);
-    }
-
-    public static FullActivityBuilder fullActivity(Activity activity,
-                                                   View triggerView,
-                                                   @DrawableRes int colorOrImageRes,
-                                                   OnAnimationEndListener onAnimationEndListener) {
-        return new FullActivityBuilder(activity, triggerView, colorOrImageRes, onAnimationEndListener);
-    }
-
     @SuppressLint("NewApi")
     public static class VisibleBuilder {
         private View mAnimView, mTriggerView;
@@ -182,23 +167,23 @@ public class CircularAnim {
         private View mTriggerView;
         private float mStartRadius = MINI_RADIUS;
         @DrawableRes
-        private int mColorOrImageRes;
+        private int mColorOrImageRes = android.R.color.white;
         private Long mDurationMills;
         private OnAnimationEndListener mOnAnimationEndListener;
         private int mEnterAnim = android.R.anim.fade_in, mExitAnim = android.R.anim.fade_out;
 
-        public FullActivityBuilder(Activity activity,
-                                   View triggerView,
-                                   @DrawableRes int colorOrImageRes,
-                                   OnAnimationEndListener onAnimationEndListener) {
+        public FullActivityBuilder(Activity activity, View triggerView) {
             mActivity = activity;
             mTriggerView = triggerView;
-            mColorOrImageRes = colorOrImageRes;
-            mOnAnimationEndListener = onAnimationEndListener;
         }
 
         public FullActivityBuilder startRadius(float startRadius) {
             mStartRadius = startRadius;
+            return this;
+        }
+
+        public FullActivityBuilder colorOrImageRes(@DrawableRes int colorOrImageRes) {
+            mColorOrImageRes = colorOrImageRes;
             return this;
         }
 
@@ -213,7 +198,9 @@ public class CircularAnim {
             return this;
         }
 
-        public void go() {
+        public void go(OnAnimationEndListener onAnimationEndListener) {
+            mOnAnimationEndListener = onAnimationEndListener;
+
             // 版本判断,小于5.0则无动画.
             if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
                 mOnAnimationEndListener.onAnimationEnd();
@@ -256,15 +243,16 @@ public class CircularAnim {
 
                     mOnAnimationEndListener.onAnimationEnd();
 
-                    // 默认渐隐过渡动画.
                     mActivity.overridePendingTransition(mEnterAnim, mExitAnim);
 
                     // 默认显示返回至当前Activity的动画.
                     mTriggerView.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            Animator anim =
-                                    ViewAnimationUtils.createCircularReveal(view, cx, cy, finalRadius, mStartRadius);
+                            if (mActivity.isFinishing()) return;
+
+                            Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy,
+                                    finalRadius, mStartRadius);
                             anim.setDuration(finalDuration);
                             anim.addListener(new AnimatorListenerAdapter() {
                                 @Override
@@ -285,6 +273,25 @@ public class CircularAnim {
             });
             anim.start();
         }
+    }
+
+
+    /* 上面为实现逻辑，下面为外部调用方法 */
+
+
+    /* 伸展并显示@animView */
+    public static VisibleBuilder show(View animView) {
+        return new VisibleBuilder(animView, true);
+    }
+
+    /* 收缩并隐藏@animView */
+    public static VisibleBuilder hide(View animView) {
+        return new VisibleBuilder(animView, false);
+    }
+
+    /* 以@triggerView 为触发点铺满整个@activity */
+    public static FullActivityBuilder fullActivity(Activity activity, View triggerView) {
+        return new FullActivityBuilder(activity, triggerView);
     }
 
 }

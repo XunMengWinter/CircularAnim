@@ -10,11 +10,11 @@
     >
 
     <LinearLayout
-        android:layout_marginTop="24dp"
-        android:background="#8dfa"
         android:id="@+id/content_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="#dfa"
         android:orientation="vertical">
 
         <Button
@@ -37,16 +37,6 @@
             android:text="Start Activity 颜色"
             android:textColor="@android:color/white"/>
 
-        <Button
-            android:id="@+id/activity_finish_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@color/colorPrimary"
-            android:padding="16dp"
-            android:text="Start Activity then finish"
-            android:textColor="@android:color/white"/>
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,6 +55,27 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorAccent"
                 android:text="变变变－进度条"
+                android:textColor="@android:color/white"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp">
+
+            <ProgressBar
+                android:id="@+id/progressBar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/change_btn2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:text="LOGIN"
                 android:textColor="@android:color/white"/>
         </FrameLayout>
     </LinearLayout>
