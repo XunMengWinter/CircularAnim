@@ -17,7 +17,7 @@ import android.widget.ImageView;
  * <p/>
  * GitHub: https://github.com/XunMengWinter
  * <p/>
- * latest edited date: 2016-08-05 17:07
+ * latest edited date: 2016-08-05 20:00
  *
  * @author ice
  */
@@ -81,13 +81,7 @@ public class CircularAnim {
         public void go() {
             // 版本判断
             if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
-                if (isShow)
-                    mAnimView.setVisibility(View.VISIBLE);
-                else
-                    mAnimView.setVisibility(View.INVISIBLE);
-
-                if (mOnAnimationEndListener != null)
-                    mOnAnimationEndListener.onAnimationEnd();
+                doOnEnd();
                 return;
             }
 
@@ -137,26 +131,37 @@ public class CircularAnim {
             else if (!isShow && mStartRadius == null)
                 mStartRadius = maxRadius + 0F;
 
-            Animator anim = ViewAnimationUtils.createCircularReveal(
-                    mAnimView, rippleCX, rippleCY, mStartRadius, mEndRadius);
-            mAnimView.setVisibility(View.VISIBLE);
-            anim.setDuration(mDurationMills);
+            try {
+                Animator anim = ViewAnimationUtils.createCircularReveal(
+                        mAnimView, rippleCX, rippleCY, mStartRadius, mEndRadius);
 
-            anim.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    if (isShow)
-                        mAnimView.setVisibility(View.VISIBLE);
-                    else
-                        mAnimView.setVisibility(View.INVISIBLE);
 
-                    if (mOnAnimationEndListener != null)
-                        mOnAnimationEndListener.onAnimationEnd();
-                }
-            });
+                mAnimView.setVisibility(View.VISIBLE);
+                anim.setDuration(mDurationMills);
 
-            anim.start();
+                anim.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        doOnEnd();
+                    }
+                });
+
+                anim.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+                doOnEnd();
+            }
+        }
+
+        private void doOnEnd() {
+            if (isShow)
+                mAnimView.setVisibility(View.VISIBLE);
+            else
+                mAnimView.setVisibility(View.INVISIBLE);
+
+            if (mOnAnimationEndListener != null)
+                mOnAnimationEndListener.onAnimationEnd();
         }
 
     }
@@ -203,7 +208,7 @@ public class CircularAnim {
 
             // 版本判断,小于5.0则无动画.
             if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
-                mOnAnimationEndListener.onAnimationEnd();
+                doOnEnd();
                 return;
             }
 
@@ -224,54 +229,72 @@ public class CircularAnim {
             int maxH = Math.max(cy, h - cy);
             final int finalRadius = (int) Math.sqrt(maxW * maxW + maxH * maxH) + 1;
 
-            Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, mStartRadius, finalRadius);
-            int maxRadius = (int) Math.sqrt(w * w + h * h) + 1;
-            // 若未设置时长，则以PERFECT_MILLS为基准根据水波扩散的距离来计算实际时间
-            if (mDurationMills == null) {
-                // 算出实际边距与最大边距的比率
-                double rate = 1d * finalRadius / maxRadius;
-                // 为了让用户便于感触到水波，速度应随最大边距的变小而越慢，扩散时间应随最大边距的变小而变小，因此比率应在 @rate 与 1 之间。
-                mDurationMills = (long) (PERFECT_MILLS * Math.sqrt(rate));
-            }
-            final long finalDuration = mDurationMills;
-            // 由于thisActivity.startActivity()会有所停顿，所以进入的水波动画应比退出的水波动画时间短才能保持视觉上的一致。
-            anim.setDuration((long) (finalDuration * 0.9));
-            anim.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
+            try {
+                Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, mStartRadius, finalRadius);
 
-                    mOnAnimationEndListener.onAnimationEnd();
+                int maxRadius = (int) Math.sqrt(w * w + h * h) + 1;
+                // 若未设置时长，则以PERFECT_MILLS为基准根据水波扩散的距离来计算实际时间
+                if (mDurationMills == null) {
+                    // 算出实际边距与最大边距的比率
+                    double rate = 1d * finalRadius / maxRadius;
+                    // 为了让用户便于感触到水波，速度应随最大边距的变小而越慢，扩散时间应随最大边距的变小而变小，因此比率应在 @rate 与 1 之间。
+                    mDurationMills = (long) (PERFECT_MILLS * Math.sqrt(rate));
+                }
+                final long finalDuration = mDurationMills;
+                // 由于thisActivity.startActivity()会有所停顿，所以进入的水波动画应比退出的水波动画时间短才能保持视觉上的一致。
+                anim.setDuration((long) (finalDuration * 0.9));
+                anim.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
 
-                    mActivity.overridePendingTransition(mEnterAnim, mExitAnim);
+                        doOnEnd();
 
-                    // 默认显示返回至当前Activity的动画.
-                    mTriggerView.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mActivity.isFinishing()) return;
+                        mActivity.overridePendingTransition(mEnterAnim, mExitAnim);
 
-                            Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy,
-                                    finalRadius, mStartRadius);
-                            anim.setDuration(finalDuration);
-                            anim.addListener(new AnimatorListenerAdapter() {
-                                @Override
-                                public void onAnimationEnd(Animator animation) {
-                                    super.onAnimationEnd(animation);
+                        // 默认显示返回至当前Activity的动画.
+                        mTriggerView.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (mActivity.isFinishing()) return;
+                                try {
+                                    Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy,
+                                            finalRadius, mStartRadius);
+                                    anim.setDuration(finalDuration);
+                                    anim.addListener(new AnimatorListenerAdapter() {
+                                        @Override
+                                        public void onAnimationEnd(Animator animation) {
+                                            super.onAnimationEnd(animation);
+                                            try {
+                                                decorView.removeView(view);
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+                                    anim.start();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                     try {
                                         decorView.removeView(view);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
+                                    } catch (Exception e1) {
+                                        e1.printStackTrace();
                                     }
                                 }
-                            });
-                            anim.start();
-                        }
-                    }, 1000);
+                            }
+                        }, 1000);
 
-                }
-            });
-            anim.start();
+                    }
+                });
+                anim.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+                doOnEnd();
+            }
+        }
+
+        private void doOnEnd() {
+            mOnAnimationEndListener.onAnimationEnd();
         }
     }
 

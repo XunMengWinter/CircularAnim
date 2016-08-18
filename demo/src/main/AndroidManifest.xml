@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="top.wefor.circularanimdemo.EmptyActivity"/>
+        <activity android:name=".ListActivity"/>
 
     </application>
 

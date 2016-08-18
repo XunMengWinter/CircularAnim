@@ -23,11 +23,12 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:design:24.0.0'
 
     compile project(path: ':circularanim')
 
     // CircularAnim 可通过compile导入，记得在Project的build.gradle里添加：maven { url "https://jitpack.io" }
-    // 不过，建议直接复制 CircularAnimUtil 类，这样更轻量更便于修改与拓展.
+    // 也可以直接复制 CircularAnim.class，这样更轻量更便于修改与拓展.
 //    compile 'com.github.XunMengWinter:CircularAnim:master-SNAPSHOT'
 
 }

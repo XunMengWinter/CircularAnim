@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                                                 .go(new CircularAnim.OnAnimationEndListener() {
                                                     @Override
                                                     public void onAnimationEnd() {
-                                                        startActivity(new Intent(MainActivity.this, EmptyActivity.class));
+                                                        startActivity(new Intent(MainActivity.this, ListActivity.class));
                                                         finish();
                                                     }
                                                 });
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                         .go(new CircularAnim.OnAnimationEndListener() {
                             @Override
                             public void onAnimationEnd() {
-                                startActivity(new Intent(MainActivity.this, EmptyActivity.class));
+                                startActivity(new Intent(MainActivity.this, ListActivity.class));
                             }
                         });
             }
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                         .go(new CircularAnim.OnAnimationEndListener() {
                             @Override
                             public void onAnimationEnd() {
-                                startActivity(new Intent(MainActivity.this, EmptyActivity.class));
+                                startActivity(new Intent(MainActivity.this, ListActivity.class));
                             }
                         });
             }
