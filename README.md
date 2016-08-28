@@ -54,8 +54,9 @@ compile 'com.github.XunMengWinter:CircularAnim:{x.y.z}'
 > CircularAnim.show(mContentLayout).triggerView(mLogoBtnIv).go();
 
 
-水波般铺满指定颜色并启动一个Activity:
-> CircularAnim.fullActivity(MainActivity.this, view)
+水波般铺满指定颜色并启动一个Activity: 
+```
+CircularAnim.fullActivity(MainActivity.this, view)
                         .colorOrImageRes(R.color.colorPrimary)
                         .go(new CircularAnim.OnAnimationEndListener() {
                             @Override
@@ -63,6 +64,7 @@ compile 'com.github.XunMengWinter:CircularAnim:{x.y.z}'
                                 startActivity(new Intent(MainActivity.this, EmptyActivity.class));
                             }
                         });
+```
 
 
 这里，你还可以放图片：
