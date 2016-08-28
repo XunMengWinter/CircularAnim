@@ -53,7 +53,8 @@ With a view's ripple animation - trigger showing another View:
 > CircularAnim.show(mContentLayout).triggerView(mLogoBtnIv).go();
 
 To set the color and start an Activity for a ripple animation:
-> CircularAnim.fullActivity(MainActivity.this, view)
+```
+CircularAnim.fullActivity(MainActivity.this, view)
                         .colorOrImageRes(R.color.colorPrimary)
                         .go(new CircularAnim.OnAnimationEndListener() {
                             @Override
@@ -61,7 +62,8 @@ To set the color and start an Activity for a ripple animation:
                                 startActivity(new Intent(MainActivity.this, EmptyActivity.class));
                             }
                         });
-                        
+```
+
 You can also supply an image:
 > .colorOrImageRes(R.mipmap.img_huoer_black)
 
