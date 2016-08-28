@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.support.annotation.DrawableRes;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
@@ -17,7 +16,7 @@ import android.widget.ImageView;
  * <p/>
  * GitHub: https://github.com/XunMengWinter
  * <p/>
- * latest edited date: 2016-08-05 20:00
+ * latest edited date: 2016-08-29 01:17
  *
  * @author ice
  */
@@ -32,6 +31,7 @@ public class CircularAnim {
 
     @SuppressLint("NewApi")
     public static class VisibleBuilder {
+
         private View mAnimView, mTriggerView;
 
         private Float mStartRadius, mEndRadius;
@@ -73,12 +73,19 @@ public class CircularAnim {
             return this;
         }
 
+        @Deprecated //You can use method - go(OnAnimationEndListener onAnimationEndListener).
         public VisibleBuilder onAnimationEndListener(OnAnimationEndListener onAnimationEndListener) {
             mOnAnimationEndListener = onAnimationEndListener;
             return this;
         }
 
         public void go() {
+            go(null);
+        }
+
+        public void go(OnAnimationEndListener onAnimationEndListener) {
+            mOnAnimationEndListener = onAnimationEndListener;
+
             // 版本判断
             if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
                 doOnEnd();
@@ -171,7 +178,6 @@ public class CircularAnim {
         private Activity mActivity;
         private View mTriggerView;
         private float mStartRadius = MINI_RADIUS;
-        @DrawableRes
         private int mColorOrImageRes = android.R.color.white;
         private Long mDurationMills;
         private OnAnimationEndListener mOnAnimationEndListener;
@@ -187,7 +193,7 @@ public class CircularAnim {
             return this;
         }
 
-        public FullActivityBuilder colorOrImageRes(@DrawableRes int colorOrImageRes) {
+        public FullActivityBuilder colorOrImageRes(int colorOrImageRes) {
             mColorOrImageRes = colorOrImageRes;
             return this;
         }

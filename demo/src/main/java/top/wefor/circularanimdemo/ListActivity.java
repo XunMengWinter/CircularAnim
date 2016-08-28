@@ -1,6 +1,5 @@
 package top.wefor.circularanimdemo;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -69,7 +68,7 @@ public class ListActivity extends AppCompatActivity {
 
             @Override
             public int getItemCount() {
-                return 2;
+                return 3;
             }
 
             class MyViewHolder extends RecyclerView.ViewHolder {

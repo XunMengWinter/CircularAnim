@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 CircularAnim.hide(mChangeBtn2)
                         .endRadius(mProgressBar2.getHeight() / 2)
-                        .onAnimationEndListener(new CircularAnim.OnAnimationEndListener() {
+                        .go(new CircularAnim.OnAnimationEndListener() {
                             @Override
                             public void onAnimationEnd() {
                                 mProgressBar2.setVisibility(View.VISIBLE);
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 }, 3000);
                             }
-                        }).go();
+                        });
             }
         });
 
@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
                         });
             }
         });
+
 
         mLogoBtnIv.setOnClickListener(new View.OnClickListener() {
             @Override
