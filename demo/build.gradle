@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    buildToolsVersion "24.0.2"
 
     defaultConfig {
         applicationId "top.wefor.circularanim"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 2
-        versionName "1.2"
+        versionCode 3
+        versionName "1.3"
     }
     buildTypes {
         release {
@@ -22,13 +22,13 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.1.1'
-    compile 'com.android.support:design:24.1.1'
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:design:24.2.1'
 
     compile project(path: ':circularanim')
 
     // CircularAnim 可通过compile导入，记得在Project的build.gradle里添加：maven { url "https://jitpack.io" }
     // 也可以直接复制 CircularAnim.class，这样更轻量更便于修改与拓展.
-//    compile 'com.github.XunMengWinter:CircularAnim:master-SNAPSHOT'
+//    compile 'com.github.XunMengWinter:CircularAnim:0.3.4'
 
 }

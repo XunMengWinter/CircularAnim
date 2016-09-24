@@ -80,7 +80,7 @@ public class ListActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             CircularAnim.fullActivity(ListActivity.this, view)
-                                    .colorOrImageRes(R.color.colorPrimary)
+//                        .colorOrImageRes(R.color.colorPrimary)  //注释掉，因为该颜色已经在App.class 里配置为默认色
                                     .go(new CircularAnim.OnAnimationEndListener() {
                                         @Override
                                         public void onAnimationEnd() {

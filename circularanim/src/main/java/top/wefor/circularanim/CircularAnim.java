@@ -25,6 +25,32 @@ public class CircularAnim {
     public static final long PERFECT_MILLS = 618;
     public static final int MINI_RADIUS = 0;
 
+    private static Long sPerfectMills;
+    private static Long sFullActivityPerfectMills;
+    private static Integer sColorOrImageRes;
+
+    private static long getPerfectMills() {
+        if (sPerfectMills != null)
+            return sPerfectMills;
+        else
+            return PERFECT_MILLS;
+    }
+
+    private static long getFullActivityMills() {
+        if (sFullActivityPerfectMills != null)
+            return sFullActivityPerfectMills;
+        else
+            return PERFECT_MILLS;
+    }
+
+    private static int getColorOrImageRes() {
+        if (sColorOrImageRes != null)
+            return sColorOrImageRes;
+        else
+            return android.R.color.white;
+    }
+
+
     public interface OnAnimationEndListener {
         void onAnimationEnd();
     }
@@ -36,7 +62,7 @@ public class CircularAnim {
 
         private Float mStartRadius, mEndRadius;
 
-        private long mDurationMills = PERFECT_MILLS;
+        private long mDurationMills = getPerfectMills();
 
         private boolean isShow;
 
@@ -178,7 +204,7 @@ public class CircularAnim {
         private Activity mActivity;
         private View mTriggerView;
         private float mStartRadius = MINI_RADIUS;
-        private int mColorOrImageRes = android.R.color.white;
+        private int mColorOrImageRes = getColorOrImageRes();
         private Long mDurationMills;
         private OnAnimationEndListener mOnAnimationEndListener;
         private int mEnterAnim = android.R.anim.fade_in, mExitAnim = android.R.anim.fade_out;
@@ -244,7 +270,7 @@ public class CircularAnim {
                     // 算出实际边距与最大边距的比率
                     double rate = 1d * finalRadius / maxRadius;
                     // 为了让用户便于感触到水波，速度应随最大边距的变小而越慢，扩散时间应随最大边距的变小而变小，因此比率应在 @rate 与 1 之间。
-                    mDurationMills = (long) (PERFECT_MILLS * Math.sqrt(rate));
+                    mDurationMills = (long) (getFullActivityMills() * Math.sqrt(rate));
                 }
                 final long finalDuration = mDurationMills;
                 // 由于thisActivity.startActivity()会有所停顿，所以进入的水波动画应比退出的水波动画时间短才能保持视觉上的一致。
@@ -321,6 +347,13 @@ public class CircularAnim {
     /* 以@triggerView 为触发点铺满整个@activity */
     public static FullActivityBuilder fullActivity(Activity activity, View triggerView) {
         return new FullActivityBuilder(activity, triggerView);
+    }
+
+    /* 设置默认时长，设置充满activity的默认颜色或图片资源 */
+    public static void init(long perfectMills, long fullActivityPerfectMills, int colorOrImageRes) {
+        sPerfectMills = perfectMills;
+        sFullActivityPerfectMills = fullActivityPerfectMills;
+        sColorOrImageRes = colorOrImageRes;
     }
 
 }
