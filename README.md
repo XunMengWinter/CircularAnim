@@ -77,6 +77,7 @@ CircularAnim.fullActivity(MainActivity.this, view)
 ### 版本改动
 * 0.3.4
 新增：可在Application中初始化CircularAnim的各项默认参数：动画时长，满铺颜色。
+
 > CircularAnim.init(700, 500, R.color.colorPrimary);
 
 ### 源码
