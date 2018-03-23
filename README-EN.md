@@ -70,6 +70,12 @@ You can also supply an image:
 Likewise, you can also set duration, radius, trantionAnim and animation end listener.
 
 
+### Changes
+* 0.3.4
+ADD：You can change the default duration and colorOrImageRes when enter app.
+> CircularAnim.init(700, 500, R.color.colorPrimary);
+
+
 ### Source
 The source is available below. You can directly construct a new [CircularAnim](https://raw.githubusercontent.com/XunMengWinter/CircularAnim/master/circularanim/src/main/java/top/wefor/circularanim/CircularAnim.java), or just use one or more parts from the source.
 
