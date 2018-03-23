@@ -16,7 +16,7 @@ import android.widget.ImageView;
  * <p/>
  * GitHub: https://github.com/XunMengWinter
  * <p/>
- * latest edited date: 2016-08-29 01:17
+ * latest edited date: 2018-03-23 13:14
  *
  * @author ice
  */
@@ -55,6 +55,10 @@ public class CircularAnim {
         void onAnimationEnd();
     }
 
+    public interface OnAnimatorDeployListener {
+        void deployAnimator(Animator animator);
+    }
+
     @SuppressLint("NewApi")
     public static class VisibleBuilder {
 
@@ -65,6 +69,8 @@ public class CircularAnim {
         private long mDurationMills = getPerfectMills();
 
         private boolean isShow;
+
+        private OnAnimatorDeployListener mOnAnimatorDeployListener;
 
         private OnAnimationEndListener mOnAnimationEndListener;
 
@@ -96,6 +102,11 @@ public class CircularAnim {
 
         public VisibleBuilder duration(long durationMills) {
             mDurationMills = durationMills;
+            return this;
+        }
+
+        public VisibleBuilder deployAnimator(OnAnimatorDeployListener onAnimatorDeployListener) {
+            mOnAnimatorDeployListener = onAnimatorDeployListener;
             return this;
         }
 
@@ -168,7 +179,6 @@ public class CircularAnim {
                 Animator anim = ViewAnimationUtils.createCircularReveal(
                         mAnimView, rippleCX, rippleCY, mStartRadius, mEndRadius);
 
-
                 mAnimView.setVisibility(View.VISIBLE);
                 anim.setDuration(mDurationMills);
 
@@ -179,7 +189,8 @@ public class CircularAnim {
                         doOnEnd();
                     }
                 });
-
+                if (mOnAnimatorDeployListener != null)
+                    mOnAnimatorDeployListener.deployAnimator(anim);
                 anim.start();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -206,6 +217,8 @@ public class CircularAnim {
         private float mStartRadius = MINI_RADIUS;
         private int mColorOrImageRes = getColorOrImageRes();
         private Long mDurationMills;
+        private OnAnimatorDeployListener mStartAnimatorDeployListener;
+        private OnAnimatorDeployListener mReturnAnimatorDeployListener;
         private OnAnimationEndListener mOnAnimationEndListener;
         private int mEnterAnim = android.R.anim.fade_in, mExitAnim = android.R.anim.fade_out;
 
@@ -235,9 +248,18 @@ public class CircularAnim {
             return this;
         }
 
+        public FullActivityBuilder deployStartAnimator(OnAnimatorDeployListener onAnimatorDeployListener) {
+            mStartAnimatorDeployListener = onAnimatorDeployListener;
+            return this;
+        }
+
+        public FullActivityBuilder deployReturnAnimator(OnAnimatorDeployListener onAnimatorDeployListener) {
+            mReturnAnimatorDeployListener = onAnimatorDeployListener;
+            return this;
+        }
+
         public void go(OnAnimationEndListener onAnimationEndListener) {
             mOnAnimationEndListener = onAnimationEndListener;
-
             // 版本判断,小于5.0则无动画.
             if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
                 doOnEnd();
@@ -288,12 +310,13 @@ public class CircularAnim {
                         mTriggerView.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                if (mActivity.isFinishing()) return;
+                                if (mActivity.isFinishing())
+                                    return;
                                 try {
-                                    Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy,
+                                    Animator returnAnim = ViewAnimationUtils.createCircularReveal(view, cx, cy,
                                             finalRadius, mStartRadius);
-                                    anim.setDuration(finalDuration);
-                                    anim.addListener(new AnimatorListenerAdapter() {
+                                    returnAnim.setDuration(finalDuration);
+                                    returnAnim.addListener(new AnimatorListenerAdapter() {
                                         @Override
                                         public void onAnimationEnd(Animator animation) {
                                             super.onAnimationEnd(animation);
@@ -304,7 +327,9 @@ public class CircularAnim {
                                             }
                                         }
                                     });
-                                    anim.start();
+                                    if (mReturnAnimatorDeployListener != null)
+                                        mReturnAnimatorDeployListener.deployAnimator(returnAnim);
+                                    returnAnim.start();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     try {
@@ -318,6 +343,8 @@ public class CircularAnim {
 
                     }
                 });
+                if (mStartAnimatorDeployListener != null)
+                    mStartAnimatorDeployListener.deployAnimator(anim);
                 anim.start();
             } catch (Exception e) {
                 e.printStackTrace();
