@@ -1,10 +1,13 @@
 package top.wefor.circularanimdemo;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -57,6 +60,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 CircularAnim.hide(mChangeBtn2)
                         .endRadius(mProgressBar2.getHeight() / 2)
+                        .deployAnimator(new CircularAnim.OnAnimatorDeployListener() {
+                            @Override
+                            public void deployAnimator(Animator animator) {
+                                animator.setDuration(1200L);
+                                animator.setInterpolator(new AccelerateInterpolator());
+                            }
+                        })
                         .go(new CircularAnim.OnAnimationEndListener() {
                             @Override
                             public void onAnimationEnd() {
@@ -100,6 +110,18 @@ public class MainActivity extends AppCompatActivity {
                 // 先将颜色展出铺满，然后启动新的Activity
                 CircularAnim.fullActivity(MainActivity.this, view)
 //                        .colorOrImageRes(R.color.colorPrimary)  //注释掉，因为该颜色已经在App.class 里配置为默认色
+                        .deployStartAnimator(new CircularAnim.OnAnimatorDeployListener() {
+                            @Override
+                            public void deployAnimator(Animator animator) {
+                                animator.setDuration(2000L);
+                            }
+                        })
+                        .deployReturnAnimator(new CircularAnim.OnAnimatorDeployListener() {
+                            @Override
+                            public void deployAnimator(Animator animator) {
+                                animator.setDuration(1200L);
+                            }
+                        })
                         .go(new CircularAnim.OnAnimationEndListener() {
                             @Override
                             public void onAnimationEnd() {
