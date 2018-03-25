@@ -75,10 +75,25 @@ CircularAnim.fullActivity(MainActivity.this, view)
 用起来非常的方便，一切逻辑性的东西都由帮助类搞定。
 
 ### 版本改动
+* 0.3.5
+新增：可以配置CircularAnim的Animator。
+
+> CircularAnim.hide(mChangeBtn2)
+                          .endRadius(mProgressBar2.getHeight() / 2)
+                          .deployAnimator(new CircularAnim.OnAnimatorDeployListener() {
+                              @Override
+                              public void deployAnimator(Animator animator) {
+                                  animator.setDuration(1200L);
+                                  animator.setInterpolator(new AccelerateInterpolator());
+                              }
+                          })
+                          .go();
+
 * 0.3.4
 新增：可在Application中初始化CircularAnim的各项默认参数：动画时长，满铺颜色。
 
 > CircularAnim.init(700, 500, R.color.colorPrimary);
+
 
 ### 源码
 下面贡献源码。你可以直接新建一个[CircularAnim](https://raw.githubusercontent.com/XunMengWinter/CircularAnim/master/circularanim/src/main/java/top/wefor/circularanim/CircularAnim.java)的类，然后把下面的代码复制进去就OK了。

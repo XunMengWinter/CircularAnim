@@ -71,6 +71,19 @@ Likewise, you can also set duration, radius, trantionAnim and animation end list
 
 
 ### Changes
+* 0.3.5
+ADD：You can deploy Animator in CircularAnim's Builder.
+> CircularAnim.hide(mChangeBtn2)
+                          .endRadius(mProgressBar2.getHeight() / 2)
+                          .deployAnimator(new CircularAnim.OnAnimatorDeployListener() {
+                              @Override
+                              public void deployAnimator(Animator animator) {
+                                  animator.setDuration(1200L);
+                                  animator.setInterpolator(new AccelerateInterpolator());
+                              }
+                          })
+                          .go();
+
 * 0.3.4
 ADD：You can change the default duration and colorOrImageRes when enter app.
 > CircularAnim.init(700, 500, R.color.colorPrimary);
