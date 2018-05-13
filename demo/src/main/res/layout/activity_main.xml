@@ -5,15 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="48dp"
     tools:context="top.wefor.circularanimdemo.MainActivity"
+    android:paddingTop="32dp"
     >
 
     <LinearLayout
+        android:layout_margin="16dp"
         android:id="@+id/content_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         android:background="#dfa"
         android:orientation="vertical">
 
@@ -81,6 +81,7 @@
     </LinearLayout>
 
     <ImageView
+        android:alpha="0.5"
         android:id="@+id/logoBtn_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

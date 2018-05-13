@@ -2,6 +2,7 @@ package top.wefor.circularanimdemo;
 
 import android.animation.Animator;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -59,13 +60,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 CircularAnim.hide(mChangeBtn2)
                         .endRadius(mProgressBar2.getHeight() / 2)
-                        .deployAnimator(new CircularAnim.OnAnimatorDeployListener() {
-                            @Override
-                            public void deployAnimator(Animator animator) {
-                                animator.setDuration(1200L);
-                                animator.setInterpolator(new AccelerateInterpolator());
-                            }
-                        })
                         .go(new CircularAnim.OnAnimationEndListener() {
                             @Override
                             public void onAnimationEnd() {
@@ -109,16 +103,12 @@ public class MainActivity extends AppCompatActivity {
                 // 先将颜色展出铺满，然后启动新的Activity
                 CircularAnim.fullActivity(MainActivity.this, view)
 //                        .colorOrImageRes(R.color.colorPrimary)  //注释掉，因为该颜色已经在App.class 里配置为默认色
-                        .deployStartAnimator(new CircularAnim.OnAnimatorDeployListener() {
-                            @Override
-                            public void deployAnimator(Animator animator) {
-                                animator.setDuration(2000L);
-                            }
-                        })
                         .deployReturnAnimator(new CircularAnim.OnAnimatorDeployListener() {
                             @Override
                             public void deployAnimator(Animator animator) {
-                                animator.setDuration(1200L);
+                                //this .setDuration() with override CircularAnim.setDuration().
+                                animator.setDuration(700L);
+                                animator.setInterpolator(new AccelerateInterpolator());
                             }
                         })
                         .go(new CircularAnim.OnAnimationEndListener() {
@@ -134,12 +124,15 @@ public class MainActivity extends AppCompatActivity {
         mLogoBtnIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                view.animate().rotationBy(90);
+//                view.animate().rotationBy(90);
                 // 以 @mLogoBtnIv 为中心，收缩或伸展 @mContentLayout
                 if (isContentVisible)
-                    CircularAnim.hide(mContentLayout).triggerView(mLogoBtnIv).go();
+                    CircularAnim.hide(mContentLayout).duration(5_000).triggerView(mLogoBtnIv).go();
                 else
-                    CircularAnim.show(mContentLayout).triggerView(mLogoBtnIv).go();
+                    CircularAnim.show(mContentLayout)
+                            .triggerPoint(new Point(mContentLayout.getWidth(), 0))
+                            .duration(5_000)
+                            .go();
 
                 isContentVisible = !isContentVisible;
             }
