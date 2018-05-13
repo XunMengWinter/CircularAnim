@@ -71,6 +71,10 @@ Likewise, you can also set duration, radius, trantionAnim and animation end list
 
 
 ### Changes
+* 0.4.0
+ADD：.triggerPoint() , You can set the ripple triggerPoint by this method, like .triggerView()。
+ADD：CircularAnim.initDefaultDeployAnimators()  , you can set the default animator deployer。
+
 * 0.3.5
 ADD：You can deploy Animator in CircularAnim's Builder.
 ```

@@ -75,6 +75,10 @@ CircularAnim.fullActivity(MainActivity.this, view)
 用起来非常的方便，一切逻辑性的东西都由帮助类搞定。
 
 ### 版本改动
+* 0.4.0
+新增：triggerPoint() 方法，可指定水波扩散点，与triggerView()类似。
+新增：CircularAnim.initDefaultDeployAnimators() 方法，可设置默认的动画部署器。
+
 * 0.3.5
 新增：可以配置CircularAnim的Animator。
 ```
