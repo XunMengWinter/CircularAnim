@@ -29,6 +29,6 @@ dependencies {
 
     // CircularAnim 可通过compile导入，记得在Project的build.gradle里添加：maven { url "https://jitpack.io" }
     // 也可以直接复制 CircularAnim.class，这样更轻量更便于修改与拓展.
-//    compile 'com.github.XunMengWinter:CircularAnim:0.4.1'
+//    implementation 'com.github.XunMengWinter:CircularAnim:0.4.1'
 
 }

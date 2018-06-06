@@ -32,7 +32,7 @@ add the dependency to the the app level build.gradle file
 
 ```
 // replace {x.y.z} with the latest version.
-compile 'com.github.XunMengWinter:CircularAnim:{x.y.z}'
+implementation 'com.github.XunMengWinter:CircularAnim:{x.y.z}'
 ```
 
 ### 使用方法
