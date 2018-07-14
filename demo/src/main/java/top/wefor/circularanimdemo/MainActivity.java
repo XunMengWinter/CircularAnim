@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import top.wefor.circularanim.CircularAnim;
+import top.wefor.circularanimdemo.fragment.FragmentTestActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -137,5 +138,9 @@ public class MainActivity extends AppCompatActivity {
                 isContentVisible = !isContentVisible;
             }
         });
+    }
+
+    public void fragmentDemo(View view) {
+        startActivity(new Intent(this, FragmentTestActivity.class));
     }
 }

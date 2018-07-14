@@ -89,5 +89,13 @@
         android:layout_marginRight="16dp"
         android:src="@mipmap/ic_launcher"/>
 
+    <Button
+        android:layout_marginBottom="16dp"
+        android:text="fragment demo"
+        android:onClick="fragmentDemo"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 </FrameLayout>
 
