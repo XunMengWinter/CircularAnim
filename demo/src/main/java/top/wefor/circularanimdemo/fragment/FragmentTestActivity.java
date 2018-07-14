@@ -50,8 +50,6 @@ public class FragmentTestActivity extends AppCompatActivity {
 
     public void replaceFragment(final View view) {
         view.setEnabled(false);
-        final Fragment nextFragment = mIsTest2Fragment ? mTest1Fragment : mTest2Fragment;
-        mIsTest2Fragment = !mIsTest2Fragment;
 
         /* show Fragment with CircularAnim */
         CircularAnim.show(mFullView)
@@ -70,8 +68,10 @@ public class FragmentTestActivity extends AppCompatActivity {
                         } else {
                             mFullView.setVisibility(View.GONE);
                         }
+
+                        showFragment(mIsTest2Fragment ? mTest1Fragment : mTest2Fragment);
+                        mIsTest2Fragment = !mIsTest2Fragment;
                         view.setEnabled(true);
-                        showFragment(nextFragment);
                     }
                 });
     }
