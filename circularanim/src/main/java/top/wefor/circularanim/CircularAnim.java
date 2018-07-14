@@ -71,7 +71,6 @@ public class CircularAnim {
         void deployAnimator(Animator animator);
     }
 
-    @SuppressLint("NewApi")
     public static class VisibleBuilder {
 
         private View mAnimView, mTriggerView;
@@ -133,6 +132,7 @@ public class CircularAnim {
             go(null);
         }
 
+        @SuppressLint("NewApi")
         public void go(OnAnimationEndListener onAnimationEndListener) {
             mOnAnimationEndListener = onAnimationEndListener;
 
@@ -211,7 +211,7 @@ public class CircularAnim {
 
     }
 
-    @SuppressLint("NewApi")
+
     public static class FullActivityBuilder {
         private Activity mActivity;
         private Point mTriggerPoint;
@@ -268,6 +268,7 @@ public class CircularAnim {
             return this;
         }
 
+        @SuppressLint("NewApi")
         public void go(OnAnimationEndListener onAnimationEndListener) {
             mOnAnimationEndListener = onAnimationEndListener;
             // 版本判断,小于5.0则无动画.
