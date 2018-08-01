@@ -3,6 +3,7 @@ package top.wefor.circularanimdemo;
 import android.animation.Animator;
 import android.content.Intent;
 import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -140,7 +141,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void fullWithDrawable(View view) {
+        // 先将图片展出铺满，然后启动新的Activity
+        CircularAnim.fullActivity(MainActivity.this, view)
+                .drawable(new ColorDrawable(0xFF996383)) // drawable will override colorOrImageRes
+                .go(new CircularAnim.OnAnimationEndListener() {
+                    @Override
+                    public void onAnimationEnd() {
+                        startActivity(new Intent(MainActivity.this, ListActivity.class));
+                    }
+                });
+    }
+
     public void fragmentDemo(View view) {
         startActivity(new Intent(this, FragmentTestActivity.class));
     }
+
 }

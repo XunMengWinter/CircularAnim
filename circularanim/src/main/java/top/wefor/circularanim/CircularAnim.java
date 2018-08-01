@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
@@ -98,11 +99,19 @@ public class CircularAnim {
             }
         }
 
+        /**
+         * set the trigger view.
+         * if {@link VisibleBuilder#mTriggerPoint} is null,
+         * then will set the mTriggerView's center as trigger point.
+         */
         public VisibleBuilder triggerView(View triggerView) {
             mTriggerView = triggerView;
             return this;
         }
 
+        /**
+         * set the trigger point.
+         */
         public VisibleBuilder triggerPoint(Point triggerPoint) {
             mTriggerPoint = triggerPoint;
             return this;
@@ -217,6 +226,7 @@ public class CircularAnim {
         private Point mTriggerPoint;
         private float mStartRadius = MINI_RADIUS;
         private int mColorOrImageRes = getColorOrImageRes();
+        private Drawable mDrawable;
         private Long mDurationMills;
         private OnAnimatorDeployListener mStartAnimatorDeployListener;
         private OnAnimatorDeployListener mReturnAnimatorDeployListener;
@@ -242,8 +252,20 @@ public class CircularAnim {
             return this;
         }
 
+        /**
+         * set the ripple background drawableRes.
+         * this will be override by {@link FullActivityBuilder#drawable(Drawable)}
+         */
         public FullActivityBuilder colorOrImageRes(int colorOrImageRes) {
             mColorOrImageRes = colorOrImageRes;
+            return this;
+        }
+
+        /**
+         * set the ripple background drawable.
+         */
+        public FullActivityBuilder drawable(Drawable drawable) {
+            mDrawable = drawable;
             return this;
         }
 
@@ -258,11 +280,17 @@ public class CircularAnim {
             return this;
         }
 
+        /**
+         * set the start animation interceptor
+         */
         public FullActivityBuilder deployStartAnimator(OnAnimatorDeployListener onAnimatorDeployListener) {
             mStartAnimatorDeployListener = onAnimatorDeployListener;
             return this;
         }
 
+        /**
+         * set the return animation interceptor
+         */
         public FullActivityBuilder deployReturnAnimator(OnAnimatorDeployListener onAnimatorDeployListener) {
             mReturnAnimatorDeployListener = onAnimatorDeployListener;
             return this;
@@ -279,7 +307,11 @@ public class CircularAnim {
 
             final ImageView view = new ImageView(mActivity);
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            view.setImageResource(mColorOrImageRes);
+            // 优先使用 mDrawable
+            if (mDrawable != null)
+                view.setImageDrawable(mDrawable);
+            else
+                view.setImageResource(mColorOrImageRes);
             final ViewGroup decorView = (ViewGroup) mActivity.getWindow().getDecorView();
             int w = decorView.getWidth();
             int h = decorView.getHeight();
