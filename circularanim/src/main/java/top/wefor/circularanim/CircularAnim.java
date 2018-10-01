@@ -14,11 +14,12 @@ import android.widget.ImageView;
 /**
  * Created on 16/8/5.
  * <p/>
- * 对 ViewAnimationUtils.createCircularReveal() 方法的封装.
+ * 对 {@link ViewAnimationUtils#createCircularReveal} 方法的封装.
+ * requires mini sdk >= 11.
  * <p/>
  * GitHub: https://github.com/XunMengWinter
  * <p/>
- * latest edited date: 2018-05-13 13:25
+ * latest edited date: 2018-10-01 11:35
  *
  * @author ice
  */
