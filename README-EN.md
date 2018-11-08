@@ -117,4 +117,4 @@ I used [JitPack.io](https://jitpack.io/docs/ANDROID/) as recommended by [YangHui
  
 [iOS version](https://github.com/entotsu/TKSubmitTransition)
 
-Translation: [Szabolcs Pasztor](https://github.com/spqpad)
+Translation: [Szabolcs Pasztor](https://github.com/szpasztor/)
