@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '27.0.3'
-
+    compileSdkVersion 34
+    namespace "top.wefor.circularanimdemo"
     defaultConfig {
         applicationId "top.wefor.circularanim"
-        minSdkVersion 14
-        targetSdkVersion 26
+        minSdkVersion 21
+        targetSdkVersion 34
         versionCode 4
         versionName "1.4"
     }
@@ -17,18 +17,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support:design:26.1.0'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.9.0' // Check for the latest version
 
     implementation project(path: ':circularanim')
 
     // CircularAnim 可通过compile导入，记得在Project的build.gradle里添加：maven { url "https://jitpack.io" }
     // 也可以直接复制 CircularAnim.class，这样更轻量更便于修改与拓展.
-//    implementation 'com.github.XunMengWinter:CircularAnim:0.4.1'
+//    implementation 'com.github.XunMengWinter:CircularAnim:0.4.4'
 
 }

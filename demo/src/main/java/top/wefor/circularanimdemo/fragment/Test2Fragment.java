@@ -1,6 +1,7 @@
 package top.wefor.circularanimdemo.fragment;
 
-import android.support.v4.app.Fragment;
+
+import androidx.fragment.app.Fragment;
 
 /**
  * Created on 2018/7/15.

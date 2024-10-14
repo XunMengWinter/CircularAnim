@@ -1,15 +1,14 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
+//apply plugin: 'com.github.dcendents.android-maven'
 
 group='com.github.XunMengWinter'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '26.0.3'
-
+    compileSdkVersion 34
+    namespace "top.wefor.circularanim"
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 27
+        targetSdkVersion 34
         versionCode 10
         versionName "0.4.4"
     }
